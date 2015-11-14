@@ -36,6 +36,10 @@ print "Numero de proposiciones aceptadas: ", n_aceptados
 
 plt.clf()
 plt.figure(1)
-plt.hist(X, bins=100, normed=True)
-plt.plot(x_w, W(x_w)/I, color='r', linewidth=2)
+plt.hist(X, bins=50, normed=True, label="Histograma")
+plt.plot(x_w, W(x_w)/I, color='r', linewidth=2, label="Distribucion deseada")
+plt.ylim([0, 0.32])
+plt.title('Distribucion W(x) deseada y generada via Metropolis')
+plt.xlabel('x')
+plt.legend()
 plt.show()

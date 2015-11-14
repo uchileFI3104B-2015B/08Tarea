@@ -49,7 +49,12 @@ for i in range(50):
 plt.clf()
 plt.figure(1)
 center = (bins[:-1] + bins[1:]) / 2
-plt.bar(center, hist_mean, align='center', width=0.2)
-plt.errorbar(bins[0:50]+0.12, hist_mean, yerr=hist_std, fmt='.', color='g')
-plt.plot(x_w, W(x_w)/I, color='r', linewidth=2)
+plt.bar(center, hist_mean, align='center', width=0.2, label="Histograma")
+plt.errorbar(bins[0:50]+0.12, hist_mean, yerr=hist_std, fmt='.', color='g',
+             label="Barras de error (desviacion estandar)")
+plt.plot(x_w, W(x_w)/I, color='r', linewidth=2, label="Distribucion deseada")
+plt.ylim([0, 0.37])
+plt.title('Distribucion W(x) generada via Metropolis con error asociado')
+plt.xlabel('x')
+plt.legend()
 plt.show()
