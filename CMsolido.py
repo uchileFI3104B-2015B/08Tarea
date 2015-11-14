@@ -8,3 +8,6 @@ def in_toro(x, y, z):
 
 def in_cilindro(x, z):
     return (x - 2)**2 + z**2 <= 1
+
+def densidad(x, y, z):
+    return 0.5 * (x**2 + y**2 + z**2)
