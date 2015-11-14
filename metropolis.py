@@ -54,8 +54,8 @@ def un_paso_metropolis(w, xn, d):
 x = np.linspace(-10., 10., 10**6)
 y = w(x)
 
-#integral = sci.trapz(y, x=x)
-#print integral
+integral = sci.trapz(y, x=x)
+print integral
 
 p.plot(x, y)
 p.show()
