@@ -8,10 +8,10 @@ N_calc = 100
 N_start = 45
 
 def in_toro(x, y, z):
-    return z**2 + (np.sqrt(x**2 + y**2) - 3)**2 <= 1
+    return (z**2 + (np.sqrt(x**2 + y**2) - 3)**2) <= 1
 
 def in_cilindro(x, z):
-    return (x - 2)**2 + z**2 <= 1
+    return ((x - 2)**2 + z**2) <= 1
 
 def densidad(x, y, z):
     return 0.5 * (x**2 + y**2 + z**2)
@@ -29,13 +29,15 @@ def calcular_CM(semilla):
     suma_x = 0
     suma_y = 0
     suma_z = 0
+    mass = 0
     for punto in Puntos_adentro:
         suma_x += punto[0]*Puntos_adentro[punto]
         suma_y += punto[1]*Puntos_adentro[punto]
         suma_z += punto[2]*Puntos_adentro[punto]
-    x_CM = suma_x/(1.0*N_puntos)
-    y_CM = suma_y/(1.0*N_puntos)
-    z_CM = suma_z/(1.0*N_puntos)
+        mass += Puntos_adentro[punto]
+    x_CM = suma_x/mass
+    y_CM = suma_y/mass
+    z_CM = suma_z/mass
     return (x_CM, y_CM, z_CM)
 
 x = np.zeros(N_calc)
