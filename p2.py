@@ -40,19 +40,6 @@ def xn_mas_1(w, xn, N, delta):
 
 
 np.random.seed(212)
-# Se grafica W(x) normalizado
-x=np.linspace(-10.,10.,1e3)
-integral = trapz(w(x), x=x)
-fig = plt.figure(1)
-fig.clf()
-ax = fig.add_subplot(111)
-plt.plot(x,w_normalizado(x), '-o')
-ax.set_xlabel("x")
-ax.set_ylabel("W(x)")
-plt.show()
-plt.draw()
-plt.savefig('w(x)_normalizado.png')
-
 # Se estima delta
 n=30
 d_posibles = np.linspace(1., 10., n)
@@ -61,7 +48,8 @@ for i in range(n):
     xn1, porcentaje = xn_mas_1(w, 0., 1e3, d_posibles[i])
     porcentajes[i] = np.copy(porcentaje)
 
-# Se grafica deltas posibles vs porcentaje aceptados
+# Se grafica deltas posibles vs porcentaje aceptados,
+# se estima d optimo = 3.79
 fig2 = plt.figure(2)
 fig2.clf()
 ax2 = fig2.add_subplot(111)
@@ -73,3 +61,25 @@ plt.axvline(x=3.79,linewidth=1, color='0')
 plt.show()
 plt.draw()
 plt.savefig('d_vs_porcentaje.png')
+
+# Se grafica W(x) normalizado
+x = np.linspace(-10., 10., 1e5)
+integral = trapz(w(x), x=x)
+fig = plt.figure(1)
+fig.clf()
+ax = fig.add_subplot(111)
+plt.plot(x,w_normalizado(x), color='r')
+ax.set_xlabel("x")
+ax.set_ylabel("W(x)")
+
+# Se grafica histograma de f_distribucion_w
+f = w(x)
+f_distribucion_w, porcentaje_final = xn_mas_1(w, -10., 10**5, 3.79)
+numero_bins=1e2
+n, bins, patches = plt.hist(f_distribucion_w, numero_bins, normed=1,
+                            facecolor='g', alpha=0.5)
+print porcentaje_final
+
+plt.show()
+plt.draw()
+plt.savefig('w(x).png')
