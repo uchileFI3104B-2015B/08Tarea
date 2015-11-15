@@ -46,6 +46,9 @@ for i in range(50):
     hist_mean[i] = np.mean(h_result[i])
     hist_std[i] = np.std(h_result[i])
 
+np.save("histpromedio.npy", hist_mean)
+np.save("histdesviacion", hist_std)
+
 plt.clf()
 plt.figure(1)
 center = (bins[:-1] + bins[1:]) / 2
@@ -57,4 +60,5 @@ plt.ylim([0, 0.37])
 plt.title('Distribucion W(x) generada via Metropolis con error asociado')
 plt.xlabel('x')
 plt.legend()
+plt.savefig('errorbars.eps')
 plt.show()
