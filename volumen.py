@@ -37,6 +37,7 @@ ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
 ax.view_init(elev=75, azim=60)
+ax.scatter(2.743, 0.019, 0.011, color='b')
 plt.show()
 plt.draw()
 plt.savefig('volumen.png')

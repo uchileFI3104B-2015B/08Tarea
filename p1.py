@@ -35,6 +35,8 @@ x_momento = volumen * suma_wx / n
 y_momento = volumen * suma_wy / n
 z_momento = volumen * suma_wz / n
 
-print x_momento / weight
-print y_momento / weight
-print z_momento / weight
+x_cm = x_momento / weight
+y_cm = y_momento / weight
+z_cm = z_momento / weight
+
+print x_cm, y_cm, z_cm
