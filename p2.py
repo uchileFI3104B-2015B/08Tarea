@@ -38,10 +38,11 @@ def xn_mas_1(w, xn, N, delta):
     porcentaje_aceptados = 100.0 * aceptados / (aceptados + rechazados)
     return xn_mas_1, porcentaje_aceptados
 
-
+# Se escoge semilla
 np.random.seed(212)
+
 # Se estima delta
-n=30
+n = 30
 d_posibles = np.linspace(1., 10., n)
 porcentajes = np.zeros(n)
 for i in range(n):
@@ -57,7 +58,7 @@ plt.plot(d_posibles, porcentajes, '-o', color='r')
 ax2.set_xlabel("Valor posible de $d$")
 ax2.set_ylabel("Porcentaje de veces aceptado")
 plt.axhline(y=50, color='g')
-plt.axvline(x=3.79,linewidth=1, color='0')
+plt.axvline(x=3.79, linewidth=1, color='0')
 plt.show()
 plt.draw()
 plt.savefig('d_vs_porcentaje.png')
@@ -68,14 +69,14 @@ integral = trapz(w(x), x=x)
 fig = plt.figure(1)
 fig.clf()
 ax = fig.add_subplot(111)
-plt.plot(x,w_normalizado(x), color='r')
+plt.plot(x, w_normalizado(x), color='r')
 ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
 
 # Se grafica histograma de f_distribucion_w
 f = w(x)
 f_distribucion_w, porcentaje_final = xn_mas_1(w, -10., 10**5, 3.79)
-numero_bins=1e2
+numero_bins = 1e2
 n, bins, patches = plt.hist(f_distribucion_w, numero_bins, normed=1,
                             facecolor='g', alpha=0.5)
 print porcentaje_final
