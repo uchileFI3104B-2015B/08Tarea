@@ -19,7 +19,8 @@ Z = r * np.sin(phi)
 fig = plt.figure(1)
 fig.clf()
 ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(X, Y, Z, color='w', rstride=1, cstride=1)
+ax.plot_surface(X, Y, Z, color='g', rstride=1, cstride=1,
+                alpha=0.3, linewidth=0.3)
 
 # segundo plot, cilindro
 x = np.linspace(1, 3, 20)
@@ -29,8 +30,8 @@ Xc, Yc = np.meshgrid(xc, y)
 X = np.meshgrid(x)
 Zc = np.sqrt(1.0 - Xc**2.0)
 
-ax.plot_surface(X, Yc, -Zc, color='w', rstride=1, cstride=1)
-ax.plot_surface(X, Yc, Zc, color='w', rstride=1, cstride=1)
+ax.plot_surface(X, Yc, -Zc, color='g', rstride=1, cstride=1, alpha=0.13)
+ax.plot_surface(X, Yc, Zc, color='g', rstride=1, cstride=1, alpha=0.13)
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
