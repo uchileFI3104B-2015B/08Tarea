@@ -56,7 +56,7 @@ plt.savefig('w(x)_normalizado.png')
 # Se estima delta
 n=30
 d_posibles = np.linspace(1., 10., n)
-porcentajes = np.zeros(len(d_posibles))
+porcentajes = np.zeros(n)
 for i in range(n):
     xn1, porcentaje = xn_mas_1(w, 0., 1e3, d_posibles[i])
     porcentajes[i] = np.copy(porcentaje)
@@ -69,6 +69,7 @@ plt.plot(d_posibles, porcentajes, '-o', color='r')
 ax2.set_xlabel("Valor posible de $d$")
 ax2.set_ylabel("Porcentaje de veces aceptado")
 plt.axhline(y=50, color='g')
+plt.axvline(x=3.79,linewidth=1, color='0')
 plt.show()
 plt.draw()
 plt.savefig('d_vs_porcentaje.png')
