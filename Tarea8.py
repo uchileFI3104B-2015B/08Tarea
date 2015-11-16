@@ -71,8 +71,41 @@ def integrar_montecarlo_cuerpo(rho,N,V):
 # funciones P2
 
 def w(x):
+    '''
+    entrega la distribucion de numeros a obtener (no normalizada)
+    '''
     W = 3.5 * np.exp((-(x - 3.)**2) / 3.) + 2. * np.exp((-(x + 1.5)**2) / 0.5)
     return W
+
+def avanza_metropolis(w,xn,d):
+    '''
+    avanza un paso el algoritmo metropolis
+    '''
+    r = np.random.uniform(-1., 1.)        # variable aleatoria ~U(-1,1)
+    xp = xn + d * r                       # distribucion proposicion
+    criterio = np.random.uniform(0., 1.)  # criterio de metropolis
+    # se prueba contra criterio de metropolis
+    if w(xp) / w(xn) > criterio:
+        return xp    # se acepta
+    else:
+        return xn    # se rechaza
+
+def itera_metropolis(w,xn,d,N):
+    '''
+    genera una muestra aleatoria mediante el algoritmo de metropolis
+    segun la distribucion dada por la funcion w
+    '''
+    x = np.zeros(N)
+    x[0] = np.copy(xn)
+    aceptado = 0.
+    rechazado = 0.
+    for i in range(len(x)-1): # itera el algoritmo metropolis para N valores
+        x[i+1] = avanza_metropolis(w, x[i], d)
+        if x[i+1] != x[i]:
+            aceptado += 1.  # cuenta los xp aceptados
+        else:
+            rechazado += 1. # cuenta los xp rechazadoss
+    return x
 
 
 ##############################################################################
@@ -88,14 +121,14 @@ rcm= 1/M * int(r*rho(r)dV)
 Caja mas pequenha que contiene al cuerpo ([1,3],[-4,4],[-1,1])
 '''
 #np.random.seed(24)
-
+'''
 N = 1e5     # numero de muestras
 V = 2.*8.*2.  # volumen de una caja que contiene el cuerpo
 R = integrar_montecarlo_cuerpo(rho,N,V)  # se resuelve el problema
 
 print 'Masa total de cuerpo =', R[0]
-print 'Pocion del centro de masa = (', R[1],',',R[2],',',R[3],')'
-
+print 'Posicion del centro de masa = (', R[1],',',R[2],',',R[3],')'
+'''
 ##############################################################################
 ##############################################################################
 # P2
@@ -105,6 +138,22 @@ xp = xn +d*r
 r es uniforme(-1,1)
 generar muestra de unos 10 millones de puntos
 '''
+x1 = np.linspace(-10., 10., 10**3)
+W1 = w(x1)  # distribucion analitica
+
+# distribucion por metropolis
+W2 = itera_metropolis(w, 0., 2., 10**5)
+
+integral = scint.trapz(W1, x=x1) # integral para normalizar
+
+plt.plot(x1, W1/integral, label = 'W(x) analitica')
+plt.hist(W2, bins=10**2, normed=1, label = 'W(x) metropolis')
+
+plt.title('Distribucion de muestra aleatoria de W(x)')
+plt.xlabel("$x$")
+plt.ylabel("$W(x)$")
+plt.legend()
+plt.show()
 
 
 ##############################################################################
