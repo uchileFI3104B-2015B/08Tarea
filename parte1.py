@@ -91,7 +91,7 @@ def centro_masa(V, n):
 
 # main
 # inicializacion
-n = 100
+n = 10000000
 dx = 2.
 dy = 8.
 dz = 2.

@@ -9,7 +9,6 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.random.seed(0)
 # funciones estructurales
 
 def w(x):
@@ -66,27 +65,27 @@ def es_optimo(d_in, n):
     pass
 
 
-# inicializacion
-n = 100000
-n_p = 10000
-x = np.linspace(-8, 8, n)
-xn = np.zeros(n)
-xn[0] = np.random.uniform(- 8, 8)
+def calcula_dist(n, s, xi):
+    s = np.int(s)
+    np.random.seed(s)
+    n_p = 10000
+    x = np.linspace(-8, 8, n)
+    xn = np.zeros(n)
+    xn[0] = np.random.uniform(- 8, 8)
+    for i in range(1, 10):
+        if es_optimo(i, n_p):
+            d = i
+            break
+    for i in range(1, n):
+        xn[i] = cond_metropolis(xn[i-1], d)
+    return xn[i]
+
+
 # iteracion
+n = 1000
+s = np.linspace(1, 10, 10)
+xi = np.linspace(-4, 5, 10)
+X = np.zeros(len(s))
+print s
 for i in range(1, 10):
-    if es_optimo(i, n_p):
-        d = i
-        print d
-        break
-for i in range(1, n):
-    xn[i] = cond_metropolis(xn[i-1], d)
-# plots
-fig=plt.figure()
-fig.clf()
-ax1=fig.add_subplot(111)
-n, bins, patches = ax1.hist(xn, 100, normed=True)
-ax1.plot(x, W(x))
-ax1.set_xlabel("X")
-ax1.set_ylabel("W(x)")
-plt.draw()
-plt.show()
+    X[i-1] = calcula_dist(n, s[i], xi[i])
