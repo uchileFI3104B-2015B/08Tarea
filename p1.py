@@ -5,7 +5,7 @@ def densidad(x, y, z):
     return 0.5 * (x**2 + y**2 + z**2)
 
 
-volumen = 8.0 * 12.0 * 2.0
+volumen = 3.0 * 8.0 * 2.0
 
 suma_w = 0.0
 suma_wx = 0.0
@@ -18,8 +18,8 @@ var_wz = 0.0
 
 np.random.seed(212)
 n = (int)(1e5)
-x = np.random.uniform(-4, 4, n)
-y = np.random.uniform(-6, 6, n)
+x = np.random.uniform(1, 4, n)
+y = np.random.uniform(-4, 4, n)
 z = np.random.uniform(-1, 1, n)
 
 
@@ -31,9 +31,9 @@ for i in range(n):
             suma_wy += y[i] * densidad(x[i], y[i], z[i])
             suma_wz += z[i] * densidad(x[i], y[i], z[i])
             var_w += densidad(x[i], y[i], z[i])**2
-            var_wx += densidad(x[i], y[i], z[i])**2
-            var_wy += densidad(x[i], y[i], z[i])**2
-            var_wz += densidad(x[i], y[i], z[i])**2
+            var_wx += (x[i] * densidad(x[i], y[i], z[i]))**2
+            var_wy += (y[i] * densidad(x[i], y[i], z[i]))**2
+            var_wz += (z[i] * densidad(x[i], y[i], z[i]))**2
 
 weight = volumen * suma_w / n
 x_momento = volumen * suma_wx / n
@@ -41,10 +41,10 @@ y_momento = volumen * suma_wy / n
 z_momento = volumen * suma_wz / n
 
 # desviaciones estandar (error)
-desv_std_w = volumen * np.sqrt((var_w / n - (weight / n)**2) / n)
-desv_std_mom_x = volumen * np.sqrt((var_wx / n - (x_momento / n)**2) / n)
-desv_std_mom_y = volumen * np.sqrt((var_wy / n - (y_momento / n)**2) / n)
-desv_std_mom_z = volumen * np.sqrt((var_wz / n - (z_momento / n)**2) / n)
+desv_std_w = volumen * np.sqrt((var_w / n - (suma_w / n)**2) / n)
+desv_std_mom_x = volumen * np.sqrt((var_wx / n - (suma_wx / n)**2) / n)
+desv_std_mom_y = volumen * np.sqrt((var_wy / n - (suma_wy / n)**2) / n)
+desv_std_mom_z = volumen * np.sqrt((var_wz / n - (suma_wz / n)**2) / n)
 
 x_cm = x_momento / weight
 y_cm = y_momento / weight

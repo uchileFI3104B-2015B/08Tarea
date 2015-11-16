@@ -2,7 +2,8 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import trapz
-
+import time
+start_time = time.time()
 
 def w(x):
     funcion = 3.5 * np.exp(-(x - 3.)**2 / 3.) + 2. * np.exp(-2 * (x + 1.5)**2)
@@ -74,9 +75,8 @@ ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
 
 # Se grafica histograma de f_distribucion_w
-f = w(x)
-f_distribucion_w, porcentaje_final = xn_mas_1(w, -10., 10**5, 3.79)
-numero_bins = 1e2
+f_distribucion_w, porcentaje_final = xn_mas_1(w, 0., 10**7, 3.79)
+numero_bins = 50
 n, bins, patches = plt.hist(f_distribucion_w, numero_bins, normed=1,
                             facecolor='g', alpha=0.5)
 print porcentaje_final
@@ -84,3 +84,4 @@ print porcentaje_final
 plt.show()
 plt.draw()
 plt.savefig('w(x).png')
+print("--- %s seconds ---" % (time.time() - start_time))
