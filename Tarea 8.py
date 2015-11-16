@@ -160,7 +160,7 @@ x0 = 10
 xpf = xp
 W = omega
 delta = 0.5  # con este valor se aceptan al menos el 50% de prop.
-size_muestra = 100000
+size_muestra = 10000000
 omegaobj = Metropolis(x0, xpf, W)
 muestra = omegaobj.metropolis(size_muestra, delta)[0]
 Naceptados = omegaobj.metropolis(size_muestra, delta)[1]
@@ -173,7 +173,7 @@ for i in range(size_muestra):
 fig1 = plt.figure(1)
 fig1.clf()
 plt.plot(x, densidad, 'r-')
-plt.hist(muestra, bins=size_muestra, histtype="stepfilled", normed=True)
+plt.hist(muestra, bins=500, histtype="stepfilled", normed=True)
 plt.xlim(-2.7, 6)
 plt.xlabel('Valores de la variable aleatoria (unidades)')
 plt.ylabel('Frecuencia (unidades)')
