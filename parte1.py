@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 '''
-Este codigo determina una estimacion del centro de masas de un toro intersectado
-con un cilindro
+Este codigo determina una estimacion del centro de masas de un toro
+intersectado con un cilindro
 '''
 
 from __future__ import division
@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(0)
-#funciones esenciales
+# funciones esenciales
 
 
 def densidad(x, y, z):
@@ -49,8 +49,14 @@ def error(M, VM, Mi, VMi):
 
 
 def centro_masa(V, n):
-    mx = 0; my = 0; mz = 0; m = 0
-    vmx = 0; vmy = 0; vmz = 0; vm = 0
+    mx = 0
+    my = 0
+    mz = 0
+    m = 0
+    vmx = 0
+    vmy = 0
+    vmz = 0
+    vm = 0
     for i in range(0, n):
         x = 2 + 1 * np.random.uniform(0., 1.)
         y = - 4 + 8 * np.random.uniform(0., 1.)
@@ -85,7 +91,9 @@ def centro_masa(V, n):
 # main
 # inicializacion
 n = 100
-dx = 1.; dy = 8.; dz = 2.
+dx = 1.
+dy = 8.
+dz = 2.
 V = dx * dy * dz
 r, vr = centro_masa(V, n)
 
