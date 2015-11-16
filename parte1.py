@@ -59,17 +59,26 @@ for i in range(0, n):
         mx += x * densidad(x, y, z)
         my += y * densidad(x, y, z)
         mz += z * densidad(x, y, z)
-        vm += np.sqrt(densidad(x, y, z))
-        vmx += np.sqrt(x * densidad(x, y, z))
-        vmy += np.sqrt(y * densidad(x, y, z))
-        vmz += np.sqrt(z * densidad(x, y, z))
+        vm += (densidad(x, y, z)) ** 2
+        vmx += (x * densidad(x, y, z)) ** 2
+        vmy += (y * densidad(x, y, z)) ** 2
+        vmz += (z * densidad(x, y, z)) ** 2
 
 
 M = V * m / n
 Mx = V * mx / n
 My = V * my / n
 Mz = V * mz / n
-VM = V * np.sqrt(np.fabs((vm / n - np.sqrt(m / n)) / n))
-VMx = V * np.sqrt(np.fabs((vmx / n - np.sqrt(mx / n)) / n))
-VMy = V * np.sqrt(np.fabs((vmy / n - np.sqrt(my / n)) / n))
-VMz = V * np.sqrt(np.fabs((vmz / n - np.sqrt(mz / n)) / n))
+VM = V * np.sqrt(np.fabs((vm / n - (m / n) ** 2) / n))
+VMx = V * np.sqrt(np.fabs((vmx / n - (mx / n) ** 2) / n))
+VMy = V * np.sqrt(np.fabs((vmy / n - (my / n) ** 2) / n))
+VMz = V * np.sqrt(np.fabs((vmz / n - (mz / n) ** 2) / n))
+Xcm = Mx / M
+Ycm = My / M
+Zcm = Mz / M
+VXcm = (Mx / M) * np.sqrt((VMx / Mx) ** 2 + (VM / M) ** 2)
+VYcm = (My / M) * np.sqrt((VMy / My) ** 2 + (VM / M) ** 2)
+VZcm = (Mz / M) * np.sqrt((VMz / Mz) ** 2 + (VM / M) ** 2)
+print VXcm
+print VYcm
+print VZcm
