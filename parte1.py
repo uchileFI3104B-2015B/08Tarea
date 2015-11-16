@@ -88,6 +88,7 @@ def centro_masa(V, n):
     VCM = VXcm, VYcm, VZcm
     return CM, VCM
 
+
 # main
 # inicializacion
 n = 100
@@ -96,7 +97,5 @@ dy = 8.
 dz = 2.
 V = dx * dy * dz
 r, vr = centro_masa(V, n)
-
-
 print r
 print vr
