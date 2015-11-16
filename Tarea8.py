@@ -96,7 +96,7 @@ def itera_metropolis(w,xn,d,N):
     segun la distribucion dada por la funcion w
     '''
     x = np.zeros(N)
-    x[0] = np.copy(xn)
+    x[0] = xn
     aceptado = 0.
     rechazado = 0.
     for i in range(len(x)-1): # itera el algoritmo metropolis para N valores
@@ -105,9 +105,20 @@ def itera_metropolis(w,xn,d,N):
             aceptado += 1.  # cuenta los xp aceptados
         else:
             rechazado += 1. # cuenta los xp rechazadoss
-    return x
+    aceptacion = 100. * aceptado / (N - 1) # % de xp aceptados
+    return x, aceptacion
 
-
+def determinar_d(d1, d2, N):
+    '''
+    calcula el porcentaje de aceptacion de xp para distintos valores de d
+    '''
+    d = np.linspace(d1, d2, N)  # arreglo de d
+    porcentaje = np.zeros(len(d))
+    for i in range(len(d)):
+        # itera metropolis para cada d y ver el porcentaje
+        W2, aceptacion = itera_metropolis(w, 0., d[i], 10**5)
+        porcentaje[i] = aceptacion
+    return d, porcentaje
 ##############################################################################
 ##############################################################################
 # P1
@@ -138,11 +149,13 @@ xp = xn +d*r
 r es uniforme(-1,1)
 generar muestra de unos 10 millones de puntos
 '''
+'''
+# resuelve el problema
 x1 = np.linspace(-10., 10., 10**3)
 W1 = w(x1)  # distribucion analitica
 
 # distribucion por metropolis
-W2 = itera_metropolis(w, 0., 2., 10**5)
+W2, aceptacion = itera_metropolis(w, 0., 3.9, 10**5)
 
 integral = scint.trapz(W1, x=x1) # integral para normalizar
 
@@ -150,12 +163,21 @@ plt.plot(x1, W1/integral, label = 'W(x) analitica')
 plt.hist(W2, bins=10**2, normed=1, label = 'W(x) metropolis')
 
 plt.title('Distribucion de muestra aleatoria de W(x)')
-plt.xlabel("$x$")
-plt.ylabel("$W(x)$")
+plt.xlabel('$x$')
+plt.ylabel('$W(x)$')
 plt.legend()
 plt.show()
+'''
+'''
+# encuentra mejor valor de d
+d, por100 = determinar_d(1., 5., 50)
+plt.plot(d, por100, '.')
 
-
+plt.title('$\%$ $x_p$ aceptados vs $\delta$')
+plt.xlabel('$\delta$')
+plt.ylabel('$\%$ $x_p$ aceptados')
+plt.show()
+'''
 ##############################################################################
 ##############################################################################
 # puntos extra
