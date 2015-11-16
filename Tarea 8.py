@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[5]:
+# In[ ]:
 
 from __future__ import division
 import numpy as np
@@ -180,6 +180,40 @@ plt.ylabel('Frecuencia (unidades)')
 plt.title('Histograma para una muestra de una v.a. \n (con tamano = ' +
           str(size_muestra) + ')')
 fig1.savefig('metropolis')
+plt.grid(True)
+plt.show()
+
+# Puntos Extra
+
+x02 = 10
+xpf2 = xp
+W2 = omega
+delta2 = 0.5  # con este valor se aceptan al menos el 50% de prop.
+size_muestra2 = 10000
+N = 100
+muestravarios = np.zeros((N, size_muestra2))
+for i in range(N):
+    np.random.seed(N+i)
+    omegaobj2 = Metropolis(x02, xpf2, W2)
+    muestra2 = omegaobj2.metropolis(size_muestra2, delta2)[0]
+    sortedm2 = np.sort(muestra2)
+    muestravarios[i, :] = sortedm2
+omega2 = np.zeros(size_muestra2)
+for k in range(size_muestra2):
+    omega2[k] = (1 / 13.2516) * omega(muestra2[k])
+error = np.zeros(size_muestra2)
+for j in range(size_muestra2):
+    error[j] = np.std(muestravarios[:, j])
+fig2 = plt.figure(2)
+fig2.clf()
+plt.errorbar(muestra2, omega2, yerr=error)
+plt.hist(muestra2, bins=500, histtype="stepfilled", normed=True)
+plt.xlim(-2.7, 6)
+plt.xlabel('Valores de la variable aleatoria (unidades)')
+plt.ylabel('Frecuencia (unidades)')
+plt.title('Histograma con barra de errores \n (con tamano = ' +
+          str(size_muestra2) + ')')
+fig2.savefig('ptosextra')
 plt.grid(True)
 plt.show()
 
