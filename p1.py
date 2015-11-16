@@ -5,7 +5,7 @@ def densidad(x, y, z):
     return 0.5 * (x**2 + y**2 + z**2)
 
 
-volumen = 3.0 * 8.0 * 2.0
+volumen = 2.0 * 8.0 * 2.0
 
 suma_w = 0.0
 suma_wx = 0.0
@@ -18,7 +18,7 @@ var_wz = 0.0
 
 np.random.seed(212)
 n = (int)(1e5)
-x = np.random.uniform(1, 4, n)
+x = np.random.uniform(1, 3, n)
 y = np.random.uniform(-4, 4, n)
 z = np.random.uniform(-1, 1, n)
 

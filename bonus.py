@@ -34,11 +34,22 @@ def xn_mas_1(w, xn, N, delta):
 
 # Se escoge semilla
 np.random.seed(212)
-
+datos_bins = np.empty(0)
+datos_n = np.empty(0)
 d = 3.79
 xn = np.linspace(0,5,6)
+numero_bins = 50
+n = np.zeros(len(xn), dtype=object)
+bins = np.zeros(len(xn), dtype=object)
 f_distribucion_w = np.zeros(len(xn), dtype=object)
 for i in range(len(xn)):
-    f_distribucion_w[i] = xn_mas_1(w, xn[i], 10**7, d)
+    f_distribucion_w[i] = xn_mas_1(w, xn[i], 10**7, 3.79)
+    n[i], bins[i], patches = plt.hist(f_distribucion_w[i], numero_bins,
+                                         normed=1, facecolor='g', alpha=0.5)
+    datos_bins = np.append(datos_bins, bins[i])
+    datos_n = np.append(datos_n, n[i])
+
+np.savetxt('bins.txt',datos_bins)
+np.savetxt('n.txt',datos_n)
 
 print("--- %s seconds ---" % (time.time() - start_time))
