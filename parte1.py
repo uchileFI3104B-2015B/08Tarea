@@ -58,7 +58,7 @@ def centro_masa(V, n):
     vmz = 0
     vm = 0
     for i in range(0, n):
-        x = 2 + 1 * np.random.uniform(0., 1.)
+        x = 1 + 2 * np.random.uniform(0., 1.)
         y = - 4 + 8 * np.random.uniform(0., 1.)
         z = - 1 + 2 * np.random.uniform(0., 1.)
         if en_cuerpo(x, y, z):
@@ -92,7 +92,7 @@ def centro_masa(V, n):
 # main
 # inicializacion
 n = 100
-dx = 1.
+dx = 2.
 dy = 8.
 dz = 2.
 V = dx * dy * dz

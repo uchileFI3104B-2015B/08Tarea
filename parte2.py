@@ -9,6 +9,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
+np.random.seed(0)
 # funciones estructurales
 
 def w(x):
@@ -35,7 +36,7 @@ def W(x):
     '''
     distribucion normalizada
     '''
-    return w(x) / normalizar
+    return w(x) / normalizar()
     pass
 
 
@@ -58,6 +59,16 @@ def d_optimo():
 
 
 # inicializacion
-
+n = 100
+d = 0.1
+x = np.linspace(-8, 8, n)
 
 # iteracion
+
+# plots
+fig=plt.figure()
+fig.clf()
+ax1=fig.add_subplot(111)
+ax1.plot(x, w(x))
+plt.draw()
+plt.show()
