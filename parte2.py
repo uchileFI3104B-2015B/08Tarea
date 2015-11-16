@@ -9,7 +9,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.random.seed(0)
+#np.random.seed(0)
 # funciones estructurales
 
 def w(x):
@@ -45,24 +45,38 @@ def cond_metropolis(xn, d):
     aplica condicion de metropolis
     '''
     xp = xn + d * np.random.uniform(- 1, 1)
-    if W(xp) / W(xn) > r:
+    if W(xp) / W(xn) > np.random.uniform(- 1, 1):
         xn = xp
     return xn
     pass
 
 
-def d_optimo():
+def es_optimo(di, n):
     '''
     busca el paso optimo
     '''
+    xn = np.zeros(n)
+    xn[0] = np.random.uniform(- 8, 8)
+    c = 0
+    for i in range(1, n):
+        xn[i] = cond_metropolis(xn[i-1], d)
+        if xn[i] == xn[i-1]:
+            c += 1
+    print c
+    print n
+    return c >= n / 2
     pass
 
 
 # inicializacion
-n = 100
+n = 100000
 d = 0.1
 x = np.linspace(-8, 8, n)
-
+xn = np.zeros(n)
+xn[0] = np.random.uniform(- 8, 8)
+print es_optimo(d, n)
+for i in range(1, n):
+    xn[i] = cond_metropolis(xn[i-1], d)
 # iteracion
 
 # plots
