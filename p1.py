@@ -8,6 +8,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def densidad(x, y, z):
     ''' Retorna la densidad del sólido en una coordenada dada '''
     rho = 0.5 + (x**2 + y**2 + z**2)
@@ -23,7 +24,7 @@ def dentro_toro(x, y, z):
 def MC1(N):
     ''' Utiliza el algoritmo de Montecarlo 1 para bla'''
     # N = Numero de puntos
-    volumen = 3 * 8 * 2. # intervalo x * intervalo y * intervalo z
+    volumen = 3 * 8 * 2.  # intervalo x * intervalo y * intervalo z
 
     suma_masa = 0
     suma_x = 0
@@ -74,8 +75,8 @@ int_y_err = MC1(int(1e5))
 integrales = int_y_err[0]
 errores = int_y_err[1]
 
-X = integrales[1] / integrales[0] # x/masa
-Y = integrales[2] / integrales[0] # y/masa
-Z = integrales[3] / integrales[0] # z/masa
+X = integrales[1] / integrales[0]  # x/masa
+Y = integrales[2] / integrales[0]  # y/masa
+Z = integrales[3] / integrales[0]  # z/masa
 
-print "posicion centro de masas = (%s,%s,%s)"%(X, Y, Z)
+print "posicion centro de masas = (%s,%s,%s)" % (X, Y, Z)
