@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 
 # funciones estructurales
 
+
 def w(x):
     '''
     distribucion sin normalizar
@@ -44,7 +45,7 @@ def cond_metropolis(xn, d):
     aplica condicion de metropolis
     '''
     xp = xn + d * np.random.uniform(- 1, 1)
-    if W(xp) / W(xn) > np.random.uniform(0 , 1):
+    if W(xp) / W(xn) > np.random.uniform(0, 1):
         xn = xp
     return xn
     pass
@@ -81,37 +82,51 @@ def calcula_dist(n, s, xi):
     return xn
 
 
+def ultimate_function(n, s, xi):
+    '''
+    no se me ocurrio otro nombre por ahora, ya que es la funcion que agrupa
+    (casi) todo.
+    agrupa los datos como histograma para repeticiones de len(s). con s setea
+    la semilla, xi corresponde al punto de partida del algoritmo. realiza la
+    iteracion para cada s, xi (con la misma dimension).
+    finalmente, calcula el promedio de la distribucion para cada bin del
+    histograma. regresa los promedios y desviacion estandar de los valores para
+    los bins.
+    '''
+    w_hist = np.zeros((len(s), 100))
+    W_mean = np.zeros(100)
+    W_std = np.zeros(100)
+    for i in range(1, len(s)):
+        s_i = s[i]
+        x_i = xi[i]
+        b = np.histogram(calcula_dist(n, s_i, x_i), bins=100,
+                         range=(-8, 8), normed=True)
+        w_hist[i-1] = b[0]
+    for l in range(1, 100):
+        a = np.zeros(len(s))
+        for m in range(1, len(s)):
+            a[m-1] = w_hist[m-1, l-1]
+        W_mean[l-1] = np.mean(a)
+        W_std[l-1] = np.std(a)
+    return W_mean, W_std
+
+
 # iteracion
 n = 1000
 s = np.linspace(1, 10, 10)
 xi = np.linspace(-4, 5, 10)
-#W_i = np.zeros((len(s), n))
-w_hist = np.zeros((len(s), 100))
-W_mean = np.zeros(100)
-W_std = np.zeros(100)
-for i in range(1, len(s)):
-    s_i = s[i]
-    x_i = xi[i]
-    b = np.histogram(calcula_dist(n, s_i, x_i), bins=100, range=(-8, 8), normed=True)
-    w_hist[i-1] = b[0]
-for l in range(1, 100):
-    a = np.zeros(len(s))
-    for m in range(1, len(s)):
-        a[m-1] = w_hist[m-1, l-1]
-    W_mean[l-1] = np.mean(a)
-    W_std[l-1] = np.std(a)
+w, s = ultimate_function(n, s, xi)
 
 # plots
 '''
 fig, ax = plt.subplots()
 f = plt.bar(np.arrange(100), W_mean, 0.16, )
-
 '''
-fig=plt.figure()
+fig = plt.figure()
 fig.clf()
-ax1=fig.add_subplot(111)
+ax1 = fig.add_subplot(111)
 x = np.linspace(-8, 8, 100)
-ax1.errorbar(x, W_mean, yerr=W_std)
+ax1.errorbar(x, s, yerr=s)
 ax1.set_xlabel("X")
 ax1.set_ylabel("W(x)")
 plt.draw()

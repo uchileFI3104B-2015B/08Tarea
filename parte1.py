@@ -23,10 +23,16 @@ def densidad(x, y, z):
 
 
 def en_toro(x, y, z):
+    '''
+    verifica si el punto esta en el toro
+    '''
     return z ** 2 + (np.sqrt(x ** 2 + y ** 2) - 3) ** 2 <= 1
 
 
 def en_cilindro(x, y, z):
+    '''
+    verifica si el punto esta en el cilindro
+    '''
     return (x - 2) ** 2 + z ** 2 <= 1
 
 
@@ -70,6 +76,7 @@ def centro_masa(V, n):
             vmx += (x * densidad(x, y, z)) ** 2
             vmy += (y * densidad(x, y, z)) ** 2
             vmz += (z * densidad(x, y, z)) ** 2
+    # pasos previos al calculo del cnetro de masas
     M = V * m / n
     Mx = V * mx / n
     My = V * my / n
@@ -78,9 +85,11 @@ def centro_masa(V, n):
     VMx = varianza(V, n, mx, vmx)
     VMy = varianza(V, n, my, vmy)
     VMz = varianza(V, n, mz, vmz)
+    # calcula centro de masa
     Xcm = Mx / M
     Ycm = My / M
     Zcm = Mz / M
+    # calcula error sobre el calculo
     VXcm = error(M, VM, Mx, VMx)
     VYcm = error(M, VM, My, VMy)
     VZcm = error(M, VM, Mz, VMz)
@@ -92,6 +101,7 @@ def centro_masa(V, n):
 # main
 # inicializacion
 n = 10000000
+# definir volumen minimo que contiene la seccion del cuerpo
 dx = 2.
 dy = 8.
 dz = 2.

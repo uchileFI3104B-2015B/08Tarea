@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 np.random.seed(0)
 # funciones estructurales
 
+
 def w(x):
     '''
     distribucion sin normalizar
@@ -45,7 +46,7 @@ def cond_metropolis(xn, d):
     aplica condicion de metropolis
     '''
     xp = xn + d * np.random.uniform(- 1, 1)
-    if W(xp) / W(xn) > np.random.uniform(0 , 1):
+    if W(xp) / W(xn) > np.random.uniform(0, 1):
         xn = xp
     return xn
     pass
@@ -67,13 +68,18 @@ def es_optimo(d_in, n):
 
 
 # inicializacion
-n = 100000
-n_p = 10000
-x = np.linspace(-8, 8, n)
+n = 10000000  # diez millones de puntos
+n_p = 10000  # n de prueba para buscar d optimo
+x = np.linspace(-8, 8, n)  # aqui se concentra la mayor parte de la dist
 xn = np.zeros(n)
 xn[0] = np.random.uniform(- 8, 8)
 # iteracion
 for i in range(1, 10):
+    '''
+    Se busca un d optimo de forma bastante simple. se podria avanzar en un paso
+    mas pequeño para lograr un valor mas preciso termina con el primer valor
+    que acepta al menos el 50 porciento de los datos
+    '''
     if es_optimo(i, n_p):
         d = i
         print d
@@ -81,12 +87,13 @@ for i in range(1, 10):
 for i in range(1, n):
     xn[i] = cond_metropolis(xn[i-1], d)
 # plots
-fig=plt.figure()
+fig = plt.figure()
 fig.clf()
-ax1=fig.add_subplot(111)
+ax1 = fig.add_subplot(111)
 n, bins, patches = ax1.hist(xn, 100, normed=True)
 ax1.plot(x, W(x))
 ax1.set_xlabel("X")
 ax1.set_ylabel("W(x)")
+plt.savefig("parte2.png")
 plt.draw()
 plt.show()
