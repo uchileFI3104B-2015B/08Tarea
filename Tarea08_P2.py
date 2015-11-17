@@ -57,13 +57,14 @@ def encuentra_delta_optimo(N_pruebas, d_minimo, d_maximo):
 
         Porcentaje = 100 * aceptados / N_pruebas
         j += 1
-        print j
 
     return Deltas[j]
 
 
 # Se calcula la distribucion
-Pasos = 1000000
+semilla=16450
+np.random.seed(semilla)
+Pasos = 10000000
 delta = encuentra_delta_optimo(1000, -10, 10)
 norm = normalizacion(-500, 500)
 X = np.linspace(-7., 10., Pasos)
@@ -74,10 +75,9 @@ for i in range(1, Pasos):
     Datos[i] = avanza_metropolis(Datos[i-1], delta)
     distribucion[i] = W(X[i]) / norm
 
-
-plt.figure(1)
-n, bins, patches = plt.hist(Datos, 100, normed=1, facecolor='green', alpha=0.5)
-plt.plot(X, distribucion, 'r')
+plt.figure(2)
+n, bins, patches = plt.hist(Datos, 25, normed=1, facecolor='#ff6b0e', alpha=0.5)
+plt.plot(X, distribucion, '#1f77b4')
 plt.xlabel("$x$")
 plt.ylabel("$Probabilidad$")
 
