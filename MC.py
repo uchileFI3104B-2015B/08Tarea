@@ -21,17 +21,16 @@ def dentro_toro(x, y, z):
 def dentro_cilindro(x, y, z):
     return ((x - 2)**2 + z**2) <= 1
     
-#Main
+#Cálculo del CM
 
-N_p = 100000 #Número de puntos
 
 def calculo_centro_masa(semilla, N):
     '''
-    Esta función calucla el centro de masa usando Monte Carlo 1
+    Esta función calucla el centro de masa usando Monte Carlo 1.
     '''
     x, y, z = generar_puntos(semilla, N)
     P_adentro = {}
-    for i in range(N_p):
+    for i in range(N):
         if dentro_toro(x[i], y[i], z[i]) and dentro_cilindro(x[i], y[i], z[i]):
             densidad = 0.5 * (x[i]**2 + y[i]**2 + z[i]**2)
             P_adentro[(x[i], y[i], z[i])] = densidad
@@ -48,5 +47,19 @@ def calculo_centro_masa(semilla, N):
     y_CM = suma_y/M
     z_CM = suma_z/M
     return (x_CM, y_CM, z_CM)
-        
+    
+#Main
+
+N_p = 100000 #Numero de puntos
+N_c = 100 #Numero de calculos de centro de masa
+semilla_inicial = 30
+    
+x = np.zeros(N_c)
+y = np.zeros(N_c)
+z = np.zeros(N_c)
+for n in range(N_c):
+    x[n], y[n], z[n] = calculo_centro_masa(n + semilla_inicial, N_p)
+print "x_CM =", np.mean(x), "+/-", np.std(x)
+print "y_CM =", np.mean(y), "+/-", np.std(y)
+print "z_CM =", np.mean(z), "+/-", np.std(z)    
         
