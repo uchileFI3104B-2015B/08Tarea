@@ -78,14 +78,41 @@ def calcula_dist(n, s, xi):
             break
     for i in range(1, n):
         xn[i] = cond_metropolis(xn[i-1], d)
-    return xn[i]
+    return xn
 
 
 # iteracion
 n = 1000
 s = np.linspace(1, 10, 10)
 xi = np.linspace(-4, 5, 10)
-X = np.zeros(len(s))
-print s
-for i in range(1, 10):
-    X[i-1] = calcula_dist(n, s[i], xi[i])
+#W_i = np.zeros((len(s), n))
+w_hist = np.zeros((len(s), 100))
+W_mean = np.zeros(100)
+W_std = np.zeros(100)
+for i in range(1, len(s)):
+    s_i = s[i]
+    x_i = xi[i]
+    b = np.histogram(calcula_dist(n, s_i, x_i), bins=100, range=(-8, 8), normed=True)
+    w_hist[i-1] = b[0]
+for l in range(1, 100):
+    a = np.zeros(len(s))
+    for m in range(1, len(s)):
+        a[m-1] = w_hist[m-1, l-1]
+    W_mean[l-1] = np.mean(a)
+    W_std[l-1] = np.std(a)
+
+# plots
+'''
+fig, ax = plt.subplots()
+f = plt.bar(np.arrange(100), W_mean, 0.16, )
+
+'''
+fig=plt.figure()
+fig.clf()
+ax1=fig.add_subplot(111)
+x = np.linspace(-8, 8, 100)
+ax1.errorbar(x, W_mean, yerr=W_std)
+ax1.set_xlabel("X")
+ax1.set_ylabel("W(x)")
+plt.draw()
+plt.show()
