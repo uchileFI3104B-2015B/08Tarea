@@ -40,7 +40,7 @@ def solido(x, y, z):
 
 #Setup
 #Valores de muestra deseados
-n = 1000
+n = 10000
 #Volumen del solido
 dx = 2
 dy = 8
@@ -58,6 +58,7 @@ var_z = 0.
 
 #Iteracion
 for i in range(0, n):
+    #Generar numeros al azar dentro del volumen que engloba al solido
     x = 1 + 2 * np.random.uniform(0., 1.)
     y = -4 + 8 * np.random.uniform(0., 1.)
     z = -1 + 2 * np.random.uniform(0., 1.)
@@ -84,11 +85,19 @@ y_cm = y / peso
 z_cm = z / peso
 
 #Valores para el error asociado
-dw = V * ((var_peso / n - ((sum_peso / n) ** 2)) / n) ** 0.5
-dx = V * ((var_x / n - ((sum_x / n) ** 2)) / n) ** 0.5
-dy = V * ((var_y / n - ((sum_y / n) ** 2)) / n) ** 0.5
-dz = V * ((var_z / n - ((sum_z / n) ** 2)) / n) ** 0.5
+#USAR PROPAGACION DE ERRORES?
+error_w = V * ((var_peso / n - ((sum_peso / n) ** 2)) / n) ** 0.5
+error_x = V * ((var_x / n - ((sum_x / n) ** 2)) / n) ** 0.5
+error_y = V * ((var_y / n - ((sum_y / n) ** 2)) / n) ** 0.5
+error_z = V * ((var_z / n - ((sum_z / n) ** 2)) / n) ** 0.5
 
+print 'Coordenadas x,y,z del centro de masa'
 print x_cm
 print y_cm
 print z_cm
+
+
+print 'Errores asociados a x,y,z'
+print error_x
+print error_y
+print error_z
