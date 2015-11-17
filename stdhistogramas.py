@@ -43,6 +43,7 @@ def calculo_hist(semilla):
     return np.histogram(X, bins=100, range=(-5, 10), normed=True)
 
 
+# Calcular los 100 histogramas
 x_w = np.linspace(-5, 10, 10000)
 I = np.sqrt(np.pi) * (3.5*np.sqrt(3) + 2*np.sqrt(0.5))
 h_result = np.zeros((100, N_runs))
@@ -58,9 +59,11 @@ for i in range(100):
     hist_mean[i] = np.mean(h_result[i])
     hist_std[i] = np.std(h_result[i])
 
+# Guardar datos
 np.save("histpromedio.npy", hist_mean)
 np.save("histdesviacion", hist_std)
 
+# Plots
 plt.clf()
 plt.figure(1)
 center = (bins[:-1] + bins[1:]) / 2

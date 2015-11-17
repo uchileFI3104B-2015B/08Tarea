@@ -54,6 +54,7 @@ def calcular_CM(semilla):
     return (x_CM, y_CM, z_CM)
 
 
+# Cálculo del CM
 x = np.zeros(N_calc)
 y = np.zeros(N_calc)
 z = np.zeros(N_calc)

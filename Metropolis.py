@@ -28,6 +28,7 @@ def proposicion(xn):
     return xn + r*DELTA
 
 
+# Obtener la distribución
 X = np.zeros(N_puntos + 1)
 n_aceptados = 0
 n = 0
@@ -45,6 +46,7 @@ x_w = np.linspace(-5, 10, 10000)
 I = np.sqrt(np.pi) * (3.5*np.sqrt(3) + 2*np.sqrt(0.5))
 print "Numero de proposiciones aceptadas: ", n_aceptados
 
+# Plots
 plt.clf()
 plt.figure(1)
 plt.hist(X, bins=100, range=[-5, 10], normed=True, label="Histograma")
