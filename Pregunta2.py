@@ -10,4 +10,4 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def W(x):
-    return (3.5*np.exp((-((x-3)**2))/3.)+2.*np.exp((-((x+1.5)**2))/0.5))
+    return (3.5*np.exp((-((x-3)**2))/3.)+2.*np.exp((-((x+1.5)**2))/0.5))/13.25155870806912
