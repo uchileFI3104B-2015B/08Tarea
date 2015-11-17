@@ -13,6 +13,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as scint
+np.random.seed(24)
 
 ##############################################################################
 ##############################################################################
@@ -119,6 +120,29 @@ def determinar_d(d1, d2, N):
         W2, aceptacion = itera_metropolis(w, 0., d[i], 10**5)
         porcentaje[i] = aceptacion
     return d, porcentaje
+
+def calculador_error(w, N, n, l, d):
+    '''
+    para n histogramas de una distribucion de N numeros
+    calcula la desviacion estandar.
+    '''
+    x = np.zeros([N,n])
+    for i in range(n):
+        # genera los n montecarlo sets de distribuciones
+        xn = np.random.uniform(-10., 10.) # punto de partida random
+        x[:,i], aceptacion = itera_metropolis(w, xn, d, N)
+    H = np.zeros([l-1,n])
+    for i in range(n):
+        # genera los n montecarlo histogramas
+        num, bins, patches = plt.hist(x[:,i], normed=1, bins=np.linspace(-10., 10., l))
+        plt.clf()
+        H[:,i] = num
+    sigma = np.zeros(l-1)
+    for i in range(len(sigma)):
+        # calcula la desviacion estandar
+        sigma[i] = np.std(H[i,:])
+    return bins, sigma
+
 ##############################################################################
 ##############################################################################
 # P1
@@ -131,7 +155,6 @@ estimar posicion del centro de masa
 rcm= 1/M * int(r*rho(r)dV)
 Caja mas pequenha que contiene al cuerpo ([1,3],[-4,4],[-1,1])
 '''
-#np.random.seed(24)
 '''
 N = 1e5     # numero de muestras
 V = 2.*8.*2.  # volumen de una caja que contiene el cuerpo
@@ -155,7 +178,7 @@ x1 = np.linspace(-10., 10., 10**3)
 W1 = w(x1)  # distribucion analitica
 
 # distribucion por metropolis
-W2, aceptacion = itera_metropolis(w, 0., 3.9, 10**5)
+W2, aceptacion = itera_metropolis(w, 0., 3.9, 10**7)
 
 integral = scint.trapz(W1, x=x1) # integral para normalizar
 
@@ -182,6 +205,17 @@ plt.show()
 ##############################################################################
 # puntos extra
 
+bins, sigma = calculador_error(w, 10**5, 100, 200, 3.9)
+
+x1 = np.linspace(-10., 10., 200 - 1)
+W1 = w(x1)  # distribucion analitica
+
+
+plt.errorbar(x1, W1, yerr=sigma, fmt='-')
+plt.title('Distrubucion de W(x) con barras de error')
+plt.xlabel('$x$')
+plt.ylabel('$W(x)$')
+plt.show()
 
 
 ##############################################################################
