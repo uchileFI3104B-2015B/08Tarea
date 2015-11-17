@@ -27,7 +27,8 @@ for i in range(50):
 fig = plt.figure(1)
 fig.clf()
 plt.bar(bins_escogido[:50], ns_promedio,
-        width = bins_escogido[1] - bins_escogido[0], color='g', alpha=0.5, 
+        width = bins_escogido[1] - bins_escogido[0], color='g', alpha=0.5,
         yerr = desviacion_estandar, error_kw=dict(ecolor='red'))
 plt.show()
 plt.draw()
+plt.savefig('bonus.png')
