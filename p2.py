@@ -16,7 +16,7 @@ def w_normalizado(x):
 
 
 # No es necesario ocupar w_normalizado
-def metropolis(w_normalizado, xn, delta):
+def metropolis(w, xn, delta):
     r = np.random.uniform(-1., 1.)
     xp = xn + delta * r
     gamma = np.random.uniform(0., 1.)
@@ -32,7 +32,7 @@ def xn_mas_1(w, xn, N, delta):
     aceptados = 0.
     rechazados = 0.
     for i in range(len(xn_mas_1)-1):
-        xn_mas_1[i+1] = metropolis(w_normalizado, xn_mas_1[i], delta)
+        xn_mas_1[i+1] = metropolis(w, xn_mas_1[i], delta)
         if xn_mas_1[i+1] == xn_mas_1[i]:
             rechazados += 1.
         else:
