@@ -41,18 +41,22 @@ for i in range(0, n):
     y = - 4 + 8 * np.random.uniform(0., 1.)
     z = - 1 + 2 * np.random.uniform(0., 1.)
     if en_cuerpo(x, y, z):
+        var_i=var(x, y, z)
+        den_i=densidad(x, y, z)
         sw += densidad(x, y, z)
-        sx += x * densidad(x, y, z)
-        sy += y * densidad(x, y, z)
-        sz += z * densidad(x, y, z)
-        varw += var(x, y, z)[0]
-        varx += var(x, y, z)[1]
-        vary += var(x, y, z)[2]
-        varz += var(x, y, z)[3]
+        sx += x * den_i
+        sy += y * den_i
+        sz += z * den_i
+        varw += var_i[0]
+        varx += var_i[1]
+        vary += var_i[2]
+        varz += var_i[3]
 
 w = V * sw / n
-x = V * sx / n
-y = V * sy / n
-z = V * sz / n
+x = V * sx / n / w
+y = V * sy / n / w
+z = V * sz / n / w
 
 print x
+print y
+print z
