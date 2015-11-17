@@ -40,18 +40,18 @@ def solido(x, y, z):
 
 #Setup
 #Valores de muestra deseados
-n = 10000
+n = 100000
 #Volumen del solido
 dx = 2
 dy = 8
 dz = 2
 V = dx * dy * dz
 #Suma inicial para peso, x, y, z, y sus varianzas correspondientes
-sum_peso = 0.
+sum_masa = 0.
 sum_x = 0.
 sum_y = 0.
 sum_z = 0.
-var_peso = 0.
+var_masa = 0.
 var_x = 0.
 var_y = 0.
 var_z = 0.
@@ -63,41 +63,46 @@ for i in range(0, n):
     y = -4 + 8 * np.random.uniform(0., 1.)
     z = -1 + 2 * np.random.uniform(0., 1.)
     if solido(x, y, z):
-        sum_peso += densidad(x, y, z)
+        sum_masa += densidad(x, y, z)
         sum_x += x * densidad(x, y, z)
         sum_y += y * densidad(x, y, z)
         sum_z += z * densidad(x, y, z)
 
-        var_peso += (densidad(x, y, z)) ** 2
+        var_masa += (densidad(x, y, z)) ** 2
         var_x += (x * densidad(x, y, z)) ** 2
         var_y += (y * densidad(x, y, z)) ** 2
         var_z += (z * densidad(x, y, z)) ** 2
 
 #Valores de las integrales
-peso = V * sum_peso / n
+masa = V * sum_masa / n
 x = V * sum_x / n
 y = V * sum_y / n
 z = V * sum_z / n
 
 #Coordenadas del centro de masa
-x_cm = x / peso
-y_cm = y / peso
-z_cm = z / peso
+x_cm = x / masa
+y_cm = y / masa
+z_cm = z / masa
 
-#Valores para el error asociado
-#USAR PROPAGACION DE ERRORES?
-error_w = V * ((var_peso / n - ((sum_peso / n) ** 2)) / n) ** 0.5
-error_x = V * ((var_x / n - ((sum_x / n) ** 2)) / n) ** 0.5
-error_y = V * ((var_y / n - ((sum_y / n) ** 2)) / n) ** 0.5
-error_z = V * ((var_z / n - ((sum_z / n) ** 2)) / n) ** 0.5
+#Valores para el error asociado a los valores x, y, z y masa
+d_masa = V * ((var_masa / n - ((sum_masa / n) ** 2)) / n) ** 0.5
+d_x = V * ((var_x / n - ((sum_x / n) ** 2)) / n) ** 0.5
+d_y = V * ((var_y / n - ((sum_y / n) ** 2)) / n) ** 0.5
+d_z = V * ((var_z / n - ((sum_z / n) ** 2)) / n) ** 0.5
+
+#Calculo del error para los valores del centro de masa con la formula
+#de propagacion de errores en la division
+error_x = (x / masa) * np.sqrt((d_x / x)**2 + (d_masa / masa)**2)
+error_y = (y / masa) * np.sqrt((d_y / y)**2 + (d_masa / masa)**2)
+error_z = (z / masa) * np.sqrt((d_z / z)**2 + (d_masa / masa)**2)
 
 print 'Coordenadas x,y,z del centro de masa'
-print x_cm
-print y_cm
-print z_cm
+print x_cm, '= x_cm'
+print y_cm, '= y_cm'
+print z_cm, '= z_cm'
 
 
 print 'Errores asociados a x,y,z'
-print error_x
-print error_y
-print error_z
+print error_x, '= error x'
+print error_y, '= error y'
+print error_z, '= error z'
