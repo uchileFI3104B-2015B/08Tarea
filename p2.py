@@ -15,7 +15,8 @@ def w_normalizado(x):
     return funcion / integral
 
 
-def avanza_metropolis(w_normalizado, xn, delta):
+# No es necesario ocupar w_normalizado
+def metropolis(w_normalizado, xn, delta):
     r = np.random.uniform(-1., 1.)
     xp = xn + delta * r
     gamma = np.random.uniform(0., 1.)
@@ -31,7 +32,7 @@ def xn_mas_1(w, xn, N, delta):
     aceptados = 0.
     rechazados = 0.
     for i in range(len(xn_mas_1)-1):
-        xn_mas_1[i+1] = avanza_metropolis(w_normalizado, xn_mas_1[i], delta)
+        xn_mas_1[i+1] = metropolis(w_normalizado, xn_mas_1[i], delta)
         if xn_mas_1[i+1] == xn_mas_1[i]:
             rechazados += 1.
         else:
@@ -75,7 +76,7 @@ ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
 
 # Se grafica histograma de f_distribucion_w
-f_distribucion_w, porcentaje_final = xn_mas_1(w, 0., 10**7, 3.79)
+f_distribucion_w, porcentaje_final = xn_mas_1(w, -20., 10**7, 3.79)
 numero_bins = 50
 n, bins, patches = plt.hist(f_distribucion_w, numero_bins, normed=1,
                             facecolor='g', alpha=0.5)
