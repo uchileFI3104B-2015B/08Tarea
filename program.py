@@ -15,14 +15,10 @@ def torito(x, y, z, R=3, r=1, dentro=1):
     del toro hasta el centro del conducto. Y r es el radio del conducto.
     Esta función ve si un punto dado (x, y, z) está dentro o fuera del toro.
     '''
-    ec = (R**2 - np.sqrt(x**2 + y**2))**2 + z**2
     A = 4 * np.pi**2 * r * R  # Corresponde al area del toro
     V = 2 * np.pi**2 * R * r**2  # Corresponde al volumen del toro
     if dentro == 1:
-        if ec <= r**2:
-            return 1
-        else:
-            return -1
+        return (R**2 - np.sqrt(x**2 + y**2))**2 + z**2 <= 1
     else:
         return A, V
 
@@ -34,13 +30,26 @@ def cilindrito(x, y, z, R=1):
     No tiene sentido hacer las funciones area y volumen, puesto que el
     cilindro es infinito en y
     '''
-    ec = (x - 2)**2 + z**2
-    if ec <= R:
-        return 1
-    else:
-        return -1
+    return (x - 2)**2 + z**2 <= R**2
+
+
+def solido(x, y, z):
+    '''
+    Nos dice si un punto x, y, z está dentro o fuera del solido formado por
+    el toro y el cilindro.
+    Devuelve 0 si esta afuera y 1 si esta dentro
+    '''
+    return cilindrito(x, y, z)*torito(x, y, z)
+
+
+def densidad(x, y ,z):
+    return 0.5 * (x**2 + y**2 + z**2)
+
+
 #########################################################################
 #  Ahora usando el método de montecarlo se integrara para encontrar     #
 #  el centro de masa del volumen con densidad no lineal de              #
 #  p = 0.5 * (x**2 + y**2 + z**2)                                       #
 #########################################################################
+N = 20000  # N grande
+volumen = 2 * 8 * 3  # se integrará sobre este volumen, que encierra al solido
