@@ -6,6 +6,7 @@ integrales son calculadas con el metodo de Montecarlo
 from __future__ import division
 import numpy as np
 
+
 np.random.seed(100)
 
 
@@ -51,7 +52,7 @@ def error_div(a, delta_a, b, delta_b):
     return (a / b) * np.sqrt((delta_a / a) ** 2 + (delta_b / b) ** 2)
 
 
-def centro_masa(V, n):
+def centro_masa(v, n):
 
     '''
     Aca ocurre la magia, calculamos el centro de masa con las funciones auxiliares
@@ -68,7 +69,7 @@ def centro_masa(V, n):
         y = -4 + 8 * np.random.uniform(0.0, 1.0)
         z = -1 + 2 * np.random.uniform(0.0, 1.0)
 
-        if inter (x, y, z) == True:
+        if inter(x, y, z):
 
             d = densidad(x, y, z)
 
@@ -82,19 +83,19 @@ def centro_masa(V, n):
             fy += (y*d)/n
             fz += (z*d)/n
 
-    masa_t = (V*m)/n
-    masa_x = (V*mx)/n
-    masa_y = (V*my)/n
-    masa_z = (V*mz)/n
-    Xcm = masa_x/masa_t
-    Ycm = masa_y/masa_t
-    Zcm = masa_z/masa_t
-    centro_de_masa = Xcm, Ycm, Zcm
+    masa_t = (v*m)/n
+    masa_x = (v*mx)/n
+    masa_y = (v*my)/n
+    masa_z = (v*mz)/n
+    xcm = masa_x/masa_t
+    ycm = masa_y/masa_t
+    zcm = masa_z/masa_t
+    centro_de_masa = xcm, ycm, zcm
 
-    delta_m = err(V, n, m, f)
-    delta_mx = err(V, n, mx, fx)
-    delta_my = err(V, n, my, fy)
-    delta_mz = err(V, n, mz, fz)
+    delta_m = err(v, n, m, f)
+    delta_mx = err(v, n, mx, fx)
+    delta_my = err(v, n, my, fy)
+    delta_mz = err(v, n, mz, fz)
 
     error_x = error_div(masa_x, delta_mx, masa_t, delta_m)
     error_y = error_div(masa_y, delta_my, masa_t, delta_m)
@@ -107,7 +108,7 @@ n = 1000000
 dx = 2.0
 dy = 8.0
 dz = 2.0
-V = dx*dy*dz
-P, E = centro_masa(V, n)
+v = dx*dy*dz
+P, E = centro_masa(v, n)
 print 'La posicion del centro de masa:', P
 print 'Y su error:', E
