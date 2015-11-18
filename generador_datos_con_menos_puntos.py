@@ -2,6 +2,8 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import trapz
+
+
 import time
 start_time = time.time()
 

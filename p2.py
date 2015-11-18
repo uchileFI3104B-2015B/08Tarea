@@ -57,7 +57,7 @@ fig2 = plt.figure(2)
 fig2.clf()
 ax2 = fig2.add_subplot(111)
 plt.plot(d_posibles, porcentajes, '-o', color='r')
-ax2.set_xlabel("Valor posible de $d$")
+ax2.set_xlabel("Valor posible de $\delta$")
 ax2.set_ylabel("Porcentaje de veces aceptado")
 plt.axhline(y=50, color='g')
 plt.axvline(x=3.79, linewidth=1, color='0')
@@ -71,17 +71,18 @@ integral = trapz(w(x), x=x)
 fig = plt.figure(1)
 fig.clf()
 ax = fig.add_subplot(111)
-plt.plot(x, w_normalizado(x), color='r')
+plt.plot(x, w_normalizado(x), color='r',label="Distribucion deseada")
 ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
 
 # Se grafica histograma de f_distribucion_w
-f_distribucion_w, porcentaje_final = xn_mas_1(w, -20., 10**7, 3.79)
-numero_bins = 50
-n, bins, patches = plt.hist(f_distribucion_w, numero_bins, normed=1,
+f_distribucion_w, porcentaje_final = xn_mas_1(w, 0., 10**7, 3.79)
+bins_escogido = np.linspace(-10,10,51)
+n, bins, patches = plt.hist(f_distribucion_w, bins_escogido, normed=1,
                             facecolor='g', alpha=0.5)
 print porcentaje_final
 
+plt.legend()
 plt.show()
 plt.draw()
 plt.savefig('w(x).png')

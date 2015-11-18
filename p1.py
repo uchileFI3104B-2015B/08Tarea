@@ -1,5 +1,12 @@
+'''
+Este script estima la posicion del centro de masa del volumen producido por la
+interseccion de un toro de ecuacion z^2 + (sqrt(x^2+y^2)-3)^2 <= 1 y un
+cilindro de ecuacion (x-2)^2 + z^2 = 1, utilizando el metodo simple de monte
+carlo en 3 dimensiones.
+'''
 from __future__ import division
 import numpy as np
+
 
 def densidad(x, y, z):
     return 0.5 * (x**2 + y**2 + z**2)
@@ -24,8 +31,8 @@ z = np.random.uniform(-1, 1, n)
 
 
 for i in range(n):
-    if z[i]**2 + ( np.sqrt(x[i]**2 + y[i]**2) - 3 )**2 <=1:
-        if (x[i]-2)**2 + z[i]**2 <=1:
+    if z[i]**2 + (np.sqrt(x[i]**2 + y[i]**2) - 3)**2 <= 1:
+        if (x[i]-2)**2 + z[i]**2 <= 1:
             suma_w += densidad(x[i], y[i], z[i])
             suma_wx += x[i] * densidad(x[i], y[i], z[i])
             suma_wy += y[i] * densidad(x[i], y[i], z[i])
