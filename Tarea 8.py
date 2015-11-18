@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[3]:
 
 from __future__ import division
 import numpy as np
@@ -134,7 +134,7 @@ class Metropolis(object):
         for i in r:
             xp = self.xp(xn[j-1], i, delta)
             if (self.densidad(xp) / self.densidad(xn[j-1]) >
-               np.random.uniform(low=-1.0, high=1.0, size=None)):
+               np.random.uniform(low=0.0, high=1.0, size=None)):
                 xn[j] = xp
                 contador += 1
             else:
@@ -173,7 +173,7 @@ for i in range(size_muestra):
 fig1 = plt.figure(1)
 fig1.clf()
 plt.plot(x, densidad, 'r-')
-plt.hist(muestra, bins=500, histtype="stepfilled", normed=True)
+plt.hist(muestra, bins=100, range=[-2.7, 6], histtype="stepfilled", normed=True)
 plt.xlim(-2.7, 6)
 plt.xlabel('Valores de la variable aleatoria (unidades)')
 plt.ylabel('Frecuencia (unidades)')
@@ -183,6 +183,7 @@ fig1.savefig('metropolis')
 plt.grid(True)
 plt.show()
 
+'''
 # Puntos Extra
 
 x02 = 10
@@ -215,7 +216,8 @@ plt.title('Histograma con barra de errores \n (con tamano = ' +
           str(size_muestra2) + ')')
 fig2.savefig('ptosextra')
 plt.grid(True)
-plt.show()
+plt.show()  # No se probo
+'''
 
 
 # In[ ]:
