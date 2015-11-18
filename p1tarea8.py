@@ -6,7 +6,7 @@ def den(x, y, z):
     return density
 
 
-N = 5000  # número de puntos de la muestra
+N = 500  # número de puntos de la muestra
 sum_d = 0
 sum_x = 0
 sum_y = 0
