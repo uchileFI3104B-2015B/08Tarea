@@ -97,8 +97,8 @@ def centro_masa(V, n_steps):
     VX = error(M, V_M, Mx, V_Mx)
     VY = error(M, V_M, My, V_My)
     VZ = error(M, V_M, Mz, V_Mz)
-    CM = X, Y, Z
-    VCM = VX, VY, VZ
+    CM = [X, Y, Z]
+    VCM = [VX, VY, VZ]
     return CM, VCM
 
 
@@ -110,6 +110,7 @@ dx = 2.
 dy = 8.
 dz = 2.
 V = dx * dy * dz
-posicion, vr = centro_masa(V, N_steps)
-print "Coordenadas centro de masa: " posicion
-print "Error estimado para cada coordenada: " vr
+posicion, error_pos = centro_masa(V, N_steps)
+print "Coordenadas centro de masa en x: ", posicion[0], "+/-", error_pos[0]
+print "Coordenadas centro de masa en y: ", posicion[1], "+/-", error_pos[1]
+print "Coordenadas centro de masa en z: ", posicion[2], "+/-", error_pos[2]
