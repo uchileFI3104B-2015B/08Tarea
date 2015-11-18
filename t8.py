@@ -7,6 +7,8 @@ la intersección de un toro y un cilindro'''
 import numpy as np
 
 np.random.seed(200)
+
+
 def densidad(x, y, z):
     ''' retorna el valor de la densidad'''
     return 0.5*(x**2 + y**2 + z**2)
