@@ -35,7 +35,7 @@ def Densidad(x, y, z):
 N_steps = 1000000
 volumen = 2. * 8. * 2.
 
-semilla=16450
+semilla = 16450
 np.random.seed(semilla)
 
 suma_peso = 0.
@@ -97,21 +97,23 @@ Z_toro = r * np.sin(phi)
 for i in range(50):
     for j in range(50):
         if X_toro[i][j] < 1 or X_toro[i][j] > 3:
-            X_toro[i][j]=np.nan
+            X_toro[i][j] = np.nan
         if Y_toro[i][j] < -4 or Y_toro[i][j] > 4:
-            Y_toro[i][j]=np.nan
+            Y_toro[i][j] = np.nan
         if Z_toro[i][j] < -1 or Z_toro[i][j] > 1:
-            z_toro[i][j]=np.nan
+            z_toro[i][j] = np.nan
 
 
 # Display the mesh
+plt.clf()
 fig1 = plt.figure(1)
-ax = fig1.gca(projection = '3d')
+ax = fig1.gca(projection='3d')
 ax.set_xlim3d(-4, 4)
 ax.set_ylim3d(-4, 4)
 ax.set_zlim3d(-4, 4)
-ax.plot_wireframe(X_toro, Y_toro, Z_toro, color = 'k', rstride = 1, cstride = 1)
-ax.plot([X_cm], [Y_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5, alpha=0.6)
+ax.plot_wireframe(X_toro, Y_toro, Z_toro, color='k', rstride=1, cstride=1)
+ax.plot([X_cm], [Y_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r',
+        marker='o', markersize=5, alpha=0.6)
 ax.set_xlabel('x', color='k')
 ax.set_ylabel('y', color='k')
 ax.set_zlabel('z', color='k')
@@ -121,11 +123,12 @@ plt.draw()
 
 fig2 = plt.figure(2)
 axes = plt.gca()
-axes.set_xlim([-4,4])
-axes.set_ylim([1,3])
+axes.set_xlim([-4, 4])
+axes.set_ylim([1, 3])
 plt.axes().set_aspect('equal', 'datalim')
-plt.plot(Y_toro,X_toro,'k')
-plt.plot([Y_cm], [X_cm], markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5, alpha=0.6)
+plt.plot(Y_toro, X_toro, 'k')
+plt.plot([Y_cm], [X_cm], markerfacecolor='r', markeredgecolor='r',
+         marker='o', markersize=5, alpha=0.6)
 plt.xlabel('Y', color='k')
 plt.ylabel('X', color='k')
 plt.savefig("XY.eps")
@@ -134,11 +137,12 @@ plt.draw()
 
 fig3 = plt.figure(3)
 axes = plt.gca()
-axes.set_xlim([1,3])
-axes.set_ylim([-1,1])
+axes.set_xlim([1, 3])
+axes.set_ylim([-1, 1])
 plt.axes().set_aspect('equal', 'datalim')
-plt.plot(X_toro,Z_toro,'k')
-plt.plot([X_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5, alpha=0.6)
+plt.plot(X_toro, Z_toro, 'k')
+plt.plot([X_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r',
+         marker='o', markersize=5, alpha=0.6)
 plt.xlabel('X', color='k')
 plt.ylabel('Z', color='k')
 plt.savefig("XZ.eps")
@@ -147,11 +151,12 @@ plt.draw()
 
 fig4 = plt.figure(4)
 axes = plt.gca()
-axes.set_xlim([-4,4])
-axes.set_ylim([-1,1])
+axes.set_xlim([-4, 4])
+axes.set_ylim([-1, 1])
 plt.axes().set_aspect('equal', 'datalim')
-plt.plot(Y_toro,Z_toro,'k')
-plt.plot([Y_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r', marker='o', markersize=5, alpha=0.6)
+plt.plot(Y_toro, Z_toro, 'k')
+plt.plot([Y_cm], [Z_cm], markerfacecolor='r', markeredgecolor='r',
+         marker='o', markersize=5, alpha=0.6)
 plt.xlabel('x', color='k')
 plt.ylabel('y', color='k')
 plt.savefig("YZ.eps")

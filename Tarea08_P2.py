@@ -62,7 +62,7 @@ def encuentra_delta_optimo(N_pruebas, d_minimo, d_maximo):
 
 
 # Se calcula la distribucion
-semilla=16450
+semilla = 16450
 np.random.seed(semilla)
 Pasos = 10000000
 delta = encuentra_delta_optimo(1000, -10, 10)
@@ -76,7 +76,8 @@ for i in range(1, Pasos):
     distribucion[i] = W(X[i]) / norm
 
 plt.figure(2)
-n, bins, patches = plt.hist(Datos, 25, normed=1, facecolor='#ff6b0e', alpha=0.5)
+n, bins, patches = plt.hist(Datos, 25, normed=1,
+                            facecolor='#ff6b0e', alpha=0.5)
 plt.plot(X, distribucion, '#1f77b4')
 plt.xlabel("$x$")
 plt.ylabel("$Probabilidad$")
