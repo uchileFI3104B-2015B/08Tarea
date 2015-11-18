@@ -12,13 +12,13 @@ import matplotlib.patches as mpatches
 
 def W(x):
     return (3.5*np.exp((-((x-3)**2))/3.)+2.*np.exp((-((x+1.5)**2))/0.5))/13.25155870806912
-    
+
 N=100000
 n=100
 x=np.linspace(-5,10,N)
 x[0]=1.
 L=[]
-for j in range(0,n):
+for j in range(0,n):   
     np.random.seed(j*2)
     r = np.random.uniform(low=0.0, high=1.0, size=N)
     np.random.seed(j*2+1)
@@ -30,7 +30,7 @@ for j in range(0,n):
         else:
             x[i+1] = x[i]
     L.append(np.histogram(x,bins=50,normed=True))
-
+    
 menStd=np.zeros(50)
 for l in range(0,50):
     de=np.zeros(50)
@@ -38,13 +38,14 @@ for l in range(0,50):
         y,binEdges=L[k]
         de[k]=y[l]
     menStd[l]=np.std(de)
-print menStd    
+print menStd
 
-plt.hist(x, bins=50, normed=True, color='red')
-red_patch = mpatches.Patch(color='red', label='Histograma')
-plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=10.,label='W(x)')
-plt.legend(handles=[red_patch])
+plt.clf()    
+y,binEdges=np.histogram(x,bins=50, normed=True)
+bincenters =2.8*(binEdges[1:]+binEdges[:-1])
+plt.bar(bincenters,y, color='r', yerr=menStd)
 plt.xlabel('x')
 plt.ylabel('W(x)')
+red_patch = mpatches.Patch(color='red', label='Histograma')
+plt.legend(handles=[red_patch])
 plt.show()
-plt.draw()
