@@ -40,7 +40,7 @@ def solido(x, y, z):
 
 #Setup
 #Valores de muestra deseados
-n = 100000
+n = 1000000
 #Volumen del solido
 dx = 2
 dy = 8
@@ -63,15 +63,16 @@ for i in range(0, n):
     y = -4 + 8 * np.random.uniform(0., 1.)
     z = -1 + 2 * np.random.uniform(0., 1.)
     if solido(x, y, z):
-        sum_masa += densidad(x, y, z)
-        sum_x += x * densidad(x, y, z)
-        sum_y += y * densidad(x, y, z)
-        sum_z += z * densidad(x, y, z)
+        dens = densidad(x, y, z)
+        sum_masa += dens
+        sum_x += x * dens
+        sum_y += y * dens
+        sum_z += z * dens
 
-        var_masa += (densidad(x, y, z)) ** 2
-        var_x += (x * densidad(x, y, z)) ** 2
-        var_y += (y * densidad(x, y, z)) ** 2
-        var_z += (z * densidad(x, y, z)) ** 2
+        var_masa += (dens) ** 2
+        var_x += (x * dens) ** 2
+        var_y += (y * dens) ** 2
+        var_z += (z * dens) ** 2
 
 #Valores de las integrales
 masa = V * sum_masa / n
