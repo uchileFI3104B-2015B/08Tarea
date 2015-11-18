@@ -50,10 +50,18 @@ print('Procentaje Aprobados = ' + str(aprov/N * 100))
 ''' Graficos '''
 
 # Distribucion sin normalizar
-x_plt = np.arange(-4.0, 7.0, 0.1)
+x_plt = np.arange(-4.0, 8.0, 0.1)
 W = distr_W(x_plt)
 fig1 = plt.figure()
+
 plt.plot(x_plt, W)
+str_title = "Distribucion no normalizada W(x)"
+plt.title(str_title, y=1.02)
+plt.ylabel('W(x)', size=14)
+plt.xlabel('x', size=14)
+plt.grid()
+plt.legend()
+
 
 # Distribucion normalizada
 x = np.arange(-70.0, 100.0, 0.1)
