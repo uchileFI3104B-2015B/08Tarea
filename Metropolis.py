@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Este código recibe 
+Este codigo calcula el histograma de una distribucion W(x) usando
+el algoritmo de Metropolis y lo compara con los valores esperados de la
+funcion normalizada. 
 """
 
 import numpy as np

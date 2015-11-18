@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov 16 00:06:13 2015
-
-@author: Administrador
+Este codigo calcula el centro de masa de un sólido descrito por la interseccion
+de un toro y un cilindro usando el metodo de Monte Carlo 1.
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 
 def generar_puntos(semilla, N):
     np.random.seed(semilla)
