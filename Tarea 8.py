@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[3]:
+# In[7]:
 
 from __future__ import division
 import numpy as np
@@ -100,7 +100,7 @@ CMmean, CMstd = solido.itera_CM_N_veces([toro, cilindro],
                                         densidad, Nejecuciones)
 print "Centro de masa (cx, cy, cz) para una ejecucion = ", CM
 print "Centro de masa promedio despues de N ejecuciones = ", CMmean
-print "Desviacion estandar para el centro de masa", CMstd
+print "Desviacion estandar para el centro de masa = ", CMstd
 
 # P2 Tarea 8
 
@@ -159,7 +159,7 @@ def xp(x0, r, delta):
 x0 = 10
 xpf = xp
 W = omega
-delta = 0.5  # con este valor se aceptan al menos el 50% de prop.
+delta = 3.5  # con este valor se aceptan al menos el 50% de prop.
 size_muestra = 10000000
 omegaobj = Metropolis(x0, xpf, W)
 muestra = omegaobj.metropolis(size_muestra, delta)[0]
@@ -190,7 +190,7 @@ plt.show()
 x02 = 10
 xpf2 = xp
 W2 = omega
-delta2 = 0.5  # con este valor se aceptan al menos el 50% de prop.
+delta2 = 3.5  # con este valor se aceptan al menos el 50% de prop.
 size_muestra2 = 10000
 N = 100
 muestravarios = np.zeros((N, size_muestra2))
