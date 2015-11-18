@@ -1,6 +1,8 @@
 '''
-Este script
-
+Este script genera una muestra aleatoria según la distribucion W(x) usando
+el método de metrópolis. Además determina el delta eficiente para que trabaje
+el método aceptando alrededor del 50% de las proposiciones.
+Finalmente grafica W(x) normalizada y el histograma de la muestra aleatoria.
 '''
 
 from __future__ import division
@@ -9,8 +11,11 @@ import matplotlib.pyplot as plt
 
 np.random.seed(83819)
 
+
 def W(x):
-    return 3.5 * np.exp(- (x - 3) ** 2 / 3.) + 2 * np.exp(- (x + 1.5) ** 2 / 0.5)
+    return (3.5 * np.exp(- (x - 3) ** 2 / 3.) +
+            2 * np.exp(- (x + 1.5) ** 2 / 0.5))
+
 
 def W_norm(x, norma):
     # Distribucion normalizada
@@ -68,7 +73,7 @@ for i in range(n):
     porcentaje[i] = np.copy(porcentajes)
 
 for i in range(n):
-    if porcentaje[i]>=49 and porcentaje[i]<=51 :
+    if porcentaje[i] >= 49 and porcentaje[i] <= 51:
         d = delta_posibles[i]
         break
 
@@ -76,10 +81,11 @@ for i in range(n):
 fig = plt.figure(1)
 fig.clf()
 ax = fig.add_subplot(111)
-plt.plot(x_integral, W_norm(x_integral, norma), label='Distribucion W(x) normalizada')
+plt.plot(x_integral, W_norm(x_integral, norma),
+         label='Distribucion W(x) normalizada')
 ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
-ax.set_title("Grafico de W(x) normalizada e histograma de variables aleatorias")
+ax.set_title("Grafico W(x) normalizada e histograma de variables aleatorias")
 
 # Se grafica histograma para la distribucion encontrada
 porcentaje_hist, xn_1_hist = calcula_porcentajes(d, 1e7, W, xn_inicial)
