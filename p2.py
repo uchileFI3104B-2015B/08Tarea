@@ -72,4 +72,15 @@ for i in range(n):
         d = delta_posibles[i]
         break
 
-print d
+
+#Graficar W(x) normalizado
+fig = plt.figure(1)
+fig.clf()
+ax = fig.add_subplot(111)
+plt.plot(x_integral, W_norm(x_integral, norma))
+ax.set_xlabel("x")
+ax.set_ylabel("W(x)")
+ax.set_title("Grafico de la distribucion W(x) normalizada")
+plt.legend()
+plt.show()
+plt.draw()
