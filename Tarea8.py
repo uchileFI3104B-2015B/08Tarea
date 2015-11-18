@@ -201,8 +201,8 @@ plt.xlabel('$x$')
 plt.ylabel('$W(x)$')
 plt.legend()
 plt.show()
-'''
-'''
+
+
 # encuentra mejor valor de d
 d, por100 = determinar_d(1., 5., 50)
 plt.plot(d, por100, '.')
@@ -211,24 +211,20 @@ plt.title('$\%$ $x_p$ aceptados vs $\delta$')
 plt.xlabel('$\delta$')
 plt.ylabel('$\%$ $x_p$ aceptados')
 plt.show()
-'''
+
 ##############################################################################
 ##############################################################################
 # puntos extra
-'''
-bins, sigma = calculador_error(w, 10**5, 100, 200, 3.9)
 
+bins, sigma = calculador_error(w, 10**5, 100, 200, 3.9)
 x1 = np.linspace(-10., 10., 200 - 1)
 W1 = w(x1)  # distribucion analitica
-
 
 plt.errorbar(x1, W1, yerr=sigma, fmt='-')
 plt.title('Distrubucion de W(x) con barras de error')
 plt.xlabel('$x$')
 plt.ylabel('$W(x)$')
 plt.show()
-'''
 
 ##############################################################################
 ##############################################################################
-'''
