@@ -13,6 +13,8 @@ generado por la intersección de un toroide y un cilindro
 def montecarloP1(n):
     '''
     La funcion pide n : Cantidad de puntos a usar
+    Devuelve la masa del cuerpo y las coordenadas
+    del centro de masa
     '''
     sw = swx = swy = swz = 0.0    # Variables
     varw = varx = vary = varz = 0.0  # Variables para calcular error
@@ -44,9 +46,9 @@ def montecarloP1(n):
     dx = vol*np.sqrt((varx/n-(swx/n)**2)/n)
     dy = vol*np.sqrt((vary/n-(swy/n)**2)/n)
     dz = vol*np.sqrt((varz/n-(swz/n)**2)/n)
-    print "El volumen es", w, "con un error de", dw
-    print "La posicion del centro de masa es: (x,y,z)=",
-    x/w, y/w, z/w,  "con un error de", dx, dy, dz
+    print "La masa es", w, "con un error de", dw
+    print "La posicion del centro de masa es: (x,y,z)=",\
+        x/w, y/w, z/w,  "con un error de", dx, dy, dz
 
 
 # main

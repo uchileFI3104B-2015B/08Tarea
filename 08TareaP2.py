@@ -13,6 +13,10 @@ w=3.5*exp((-(x-3)**2)/3.) + 2 exp((-(x+1.5)**2)/0.5)
 
 
 def MetropolisP2(n, d, xn):
+    '''
+    Funcion que toma el numero de la muestra, el valor fijo d
+     y el punto inicial xn para calcular los datos del histograma
+    '''
     for i in range(n):
         r = -1+2*np.random.sample()
         xp = xn + (d*r)
@@ -33,7 +37,7 @@ puntos = []
 n = 10000000
 np.random.seed(19)  # semilla
 xn = -1+2*np.random.sample()  # valor inicial, depende de la semilla
-d = 4
+d = 2
 MetropolisP2(n, d, xn)
 
 # Plot Histograma
