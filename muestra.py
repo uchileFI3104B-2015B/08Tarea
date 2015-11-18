@@ -26,7 +26,8 @@ def mostrar(muestra):
     w = np.vectorize(W)
     distr = w(x)
     num_bins = 50
-    n, bins, patches = ax.hist(muestra, num_bins, normed=True, facecolor='green',
+    n, bins, patches = ax.hist(muestra, num_bins, normed=True,
+                               facecolor='green',
                                alpha=0.5, label="muestra")
     ax.set_xlim(-4, 8)
     ax.plot(x, distr, color="red", label="distribucion esperada")
@@ -47,8 +48,8 @@ p_n = W(x_n)
 N = 10000000
 muestra = np.zeros(N)
 
-for i in range (N):
-    x_n1 =x_n + DELTA * np.random.uniform(-1, 1)
+for i in range(N):
+    x_n1 = x_n + DELTA * np.random.uniform(-1, 1)
     p_n1 = W(x_n1)
     a = p_n1 / p_n
     if a >= 1:

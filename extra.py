@@ -29,10 +29,10 @@ def llenar_errores(HIST):
         error[i] = np.std(bin_1)
     return error
 
-HIST = np.zeros((100, 50)) # matrices donde se guardaran los histogramas para cada iteracion
-EDGES = np.zeros((100, 51))
-ERRORES = np.zeros(50) # matriz donde se guardaran los errores de cada bin
-SEMILLA = np.linspace(1,100,100)
+HIST = np.zeros((100, 50))  # matrices donde se
+EDGES = np.zeros((100, 51))  # guardaran los histogramas para cada iteracion
+ERRORES = np.zeros(50)  # matriz donde se guardaran los errores de cada bin
+SEMILLA = np.linspace(1, 100, 100)
 
 for j in range(len(SEMILLA)):
     print(j)
@@ -42,8 +42,8 @@ for j in range(len(SEMILLA)):
     p_n = W(x_n)
     N = 100000
     muestra = np.zeros(N)
-    for i in range (N):
-        x_n1 =x_n + DELTA * np.random.uniform(-1, 1)
+    for i in range(N):
+        x_n1 = x_n + DELTA * np.random.uniform(-1, 1)
         p_n1 = W(x_n1)
         a = p_n1 / p_n
         if a >= 1:
@@ -65,8 +65,9 @@ for j in range(len(SEMILLA)):
     print("fin")
 ERRORES = llenar_errores(HIST)
 bincenters = 0.5*(EDGES[1, :][1:]+EDGES[1, :][:-1])
-width=0.2
-plt.bar(bincenters, HIST[1, :], width=width, color='g', yerr=ERRORES, label="Muestra obtenida")
+width = 0.2
+plt.bar(bincenters, HIST[1, :], width=width, color='g',
+        yerr=ERRORES, label="Muestra obtenida")
 
 
 x = np.linspace(-100, 100, 1000)
