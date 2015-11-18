@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(221)
-N = 10000000 # Número de 
+N = 10000000 # Número de puntos
 #delta = ??
  
 def W(x):
@@ -20,6 +20,8 @@ def proposicion(x_n): #Para Metropolis
     return x_n + r*delta
 
 #Main
+
+#Metropolis
  
 x = np.zeros(N+1)
 n_a = 0 #n aceptados
@@ -36,3 +38,18 @@ while n < N:
 
 W_p = np.sqrt(np.pi) * (3.5*np.sqrt(3) + 2*np.sqrt(0.5))
 print "Numero de proposiciones aceptadas: ", n_a
+
+#Graficos
+
+x_w = np.linspace(-5, 10, 10000)
+plt.clf()
+plt.figure(1)
+plt.hist(x, bins=100, range=[-5, 10], normed=True, label="Histograma")
+plt.plot(x_w, W(x_w)/W_p, color='r', linewidth=2, label="Distribucion deseada")
+plt.ylim([0, 0.32])
+plt.xlim([-5, 10])
+plt.title('Distribucion  W(x) deseada y generada por algoritmo de Metropolis')
+plt.xlabel('x')
+plt.legend()
+plt.savefig('Metropolis.png')
+plt.show()
