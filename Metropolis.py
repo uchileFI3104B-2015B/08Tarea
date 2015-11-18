@@ -5,10 +5,9 @@ Este código recibe
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.mlab as mlab
 
 np.random.seed(221)
-N = 10000000
+N = 10000000 # Número de 
 #delta = ??
  
 def W(x):
@@ -22,4 +21,15 @@ def proposicion(x_n): #Para Metropolis
 
 #Main
  
-
+x = np.zeros(N+1)
+n_a = 0 #n aceptados
+n = 0 # sirve como contador
+while n < N:
+    s = np.random.uniform(low=0, high=1)
+    x_p = proposicion (x[n])
+    if W(x_p) / W(x[n]) > s:
+        x[n+1] = x_p
+        n_a += 1
+    else:
+        x[n+1] = x[n]
+    n += 1
