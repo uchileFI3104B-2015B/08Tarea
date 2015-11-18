@@ -1,0 +1,53 @@
+\documentclass[prl,showpacs, twocolumn]{revtex4-1}
+\usepackage{graphicx,amssymb,color}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{pgfgantt}
+
+
+\begin{document}
+\title{FI3104 M\'etodos Num\'ericos para la Ciencia e Ingenier\'ia\\ Tarea 8}
+\author{Camila Sandivari}
+\affiliation{Profesor: Valentino Gonzalez \\ Profesor Auxiliar: Felipe Pesce}
+\date{\today}
+
+\begin{abstract}
+El presente reporte muestra la implementaci\'on del m\'etodo num\'erico de integraci\'on de montecarlo 1 (implementaci\'on simple), utilizado para encontrar el centro de masa de un s\'olido que se forma al intersectar un toro con un cilindro. Adem\'as se implementa el algoritmo metr\'opolis con el objetivo de generar una muestra aleatoria de 10 millones de puntos con números distribuidos de cierta forma, que se muestra en un histograma.
+\end{abstract}
+\maketitle
+
+\paragraph{Procedimiento}
+\subparagraph{Parte 1}
+Se establece una densidad para el s\'olido que var\'ia de la forma $\rho(x, y, z) = 0.5 * (x^2 + y^2 + z^2)$, usando la funci\'on del paquete numpy $random.uniform$ se obtienen valores de x, y, z aleatorios dentro del volumen del s\'olido, este volumen corresponde al m\'as peque\~no posible considerando la intersecci\'on de las ecuaciones (1) y (2), luego se condiciona, si las coordenadas caen dentro del volumen se suma ponderada por el valor de la densidad en ese punto.
+
+\begin{eqnarray}
+{\rm Toro:\ \ } z^2 + \left( \sqrt{x^2 + y^2} - 3 \right)^2 \leq 1\\ 
+{\rm Cilindro:\ \ } (x - 2)^2 + z^2 \leq 1 
+\end{eqnarray}
+
+\subparagraph{Parte 2}
+Con el objetivo de generar una muestra aleatoria de números que distribuye de la forma que se muestra en (3) se utiliza el algoritmo de metr\'opolis que consiste en obtener un $x_{p}$ que suceda de un $x_{n}$, según la relaci\'on $x_{p} = x_{n} + \delta * r$ con r una variable aleatoria entre [-1,1] obtenida de la funci\'on $random.uniform$. Estableciendo un criterio de selecci\'on dado por $\frac{W(x_{p})}{W(x_{n})} > r$, si esto sucede entonces aceptamos $x_{p}$ como un valor de x a agregar que cumple las condiciones que se est\'a pidiendo de la muestra.
+
+\begin{equation}
+\label{ }
+W(x) = 3.5 \times \exp\left({\frac{-(x-3)^2}{3}}\right) + 2 \times \exp{\left(\frac{-(x+1.5)^2}{0.5}\right)}
+\end{equation}
+
+
+\paragraph{Resultados}
+\subparagraph{Parte 1}
+Se obtienen valores para las coordenadas del centro de masa :
+
+\begin{eqnarray}
+\label{ }
+x=2.080431762222459e-06\\
+y=6.874749423948482e-10\\
+z= 1.320207428878433e-09
+\end{eqnarray}
+
+
+\newpage
+\paragraph{Conclusiones}
+A pesar de algunos errores y dificultades logro entender cual es la finalidad de los algoritmos y su modo de operar. Es bastante \'util poder generar muestras aleatorias con la distribuci\'on que nos sirva para operar sobre ellas como en el algoritmo de metr\'opolis.
+\end{document}
