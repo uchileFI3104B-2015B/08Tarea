@@ -4,6 +4,7 @@ Los datos corresponden al valor asociado a cada bin (50 bins desde -10 a 10)
 del histograma de la muestra (de 10 millones de puntos) que se obtiene al
 realizar cada una de las 101 repeticiones del algoritmo de metrópolis. Con
 delta = 3.79.
+Importante: El script demora en correr aproximadamente 3.5 horas.
 '''
 from __future__ import division
 import matplotlib.pyplot as plt
