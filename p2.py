@@ -1,9 +1,18 @@
+'''
+Este script genera una muestra de 10 millones de puntos con una distribucion
+muy similar a una dada:
+(w(x)=3.5 * exp(-(x - 3)^2 / 3) + 2. * exp(-2 * (x + 1.5)^2))
+Utilizando el algoritmo de metrópolis.
+Finalmente crea un histograma de la muestra con 50 bins y plotea encima a la
+funcion w(x).
+'''
 from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import trapz
 import time
 start_time = time.time()
+
 
 def w(x):
     funcion = 3.5 * np.exp(-(x - 3.)**2 / 3.) + 2. * np.exp(-2 * (x + 1.5)**2)
@@ -71,13 +80,13 @@ integral = trapz(w(x), x=x)
 fig = plt.figure(1)
 fig.clf()
 ax = fig.add_subplot(111)
-plt.plot(x, w_normalizado(x), color='r',label="Distribucion deseada")
+plt.plot(x, w_normalizado(x), color='r', label="Distribucion deseada")
 ax.set_xlabel("x")
 ax.set_ylabel("W(x)")
 
 # Se grafica histograma de f_distribucion_w
 f_distribucion_w, porcentaje_final = xn_mas_1(w, 0., 10**7, 3.79)
-bins_escogido = np.linspace(-10,10,51)
+bins_escogido = np.linspace(-10, 10, 51)
 n, bins, patches = plt.hist(f_distribucion_w, bins_escogido, normed=1,
                             facecolor='g', alpha=0.5)
 print porcentaje_final
