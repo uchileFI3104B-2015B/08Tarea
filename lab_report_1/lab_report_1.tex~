@@ -43,7 +43,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{M\'etodos num\'ericos para la Ciencia e Ingenier\'ia \\ Tarea 6: Ecuaciones de reacción-difusión} % Title
+\title{M\'etodos num\'ericos para la Ciencia e Ingenier\'ia \\ Tarea 6: Métodos Aleatorios} % Title
 
 \author{Felipe Toledo Bittner} % Author name
 
@@ -57,69 +57,51 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Introducción}
+\section{Integración de Montecarlo}
 
-Los sistemas de reacción-difusión se utilizan para modelar matemáticamente fenómenos espaciales en que el valor de una variable en cada punto presenta dependencia tanto de reacciones locales como de difusión desde los puntos cercanos. Su forma general puede verse en la ecuación (\ref{eq:reaccion_difusion}). El primer término de la derecha corresponde a la componente difusiva y el segundo a la reactiva, en este caso modelada como el polinomio $P(n)$.
+\subsection{Introducción}
+
+Se desea obtener la posición del centro de masa de un sólido formado por la intersección de un toro con un cilindro, descrito por las ecuaciones (\ref{eq:toro}) y (\ref{eq:cilindro}).
 
 \begin{equation}
-  \dfrac{dn}{dt} = \gamma \dfrac{d^2n}{dx^2} + P(n)
-  \label{eq:reaccion_difusion}
+  Toro:\ z^2 + \left( \sqrt{x^2 + y^2} - 3 \right)^2 \leq 1
+  \label{eq:toro}
 \end{equation}
 
-En este trabajo se implementa una clase en python que permite crear un sistema de reacción-difusión unidimensional y resolverlo para un intervalo de tiempo escogido por el usuario. Se incluyen métodos que permiten setear la variable $\gamma$, los coeficientes del polinomio $P(n)$ y las condiciones iniciales y de borde.
-
-\section{Descripción de la solución}
-
-La clase implementada permite resolver cualquier sistema de reacción-difusión que posea la forma de la ecuación (\ref{eq:reaccion_difusion}). En el archivo \emph{main\_p1.py} adjunto a este informe hay un ejemplo bien comentado con los pasos a seguir para inicializar el programa, en este caso con la ecuación de Fisher-KPP.
- 
-\subsection{Algoritmo de integración}
-\label{sec:algoritmo_integracion}
-
-Para integrar la ecuación de forma numérica se opta por utilizar dos métodos, Crank-Nicolson para la parte de difusión y una versión modificada del método de Euler para la de reacción. La modificación ha sido una elaboración propia, y es justificada a continuación.
-
-Inicialmente consideremos el caso en que no hay componente de difusión. La ecuación (\ref{eq:reaccion_difusion}) queda escrita en forma numérica como se muestra en (\ref{eq:no_difusion}). Los subíndices $(x,t)$ en este caso representan posiciones y tiempos discretos y $h$ es el paso temporal de la integración.
-
 \begin{equation}
-  \frac{n_{x,t+1} - n_{x,t}}{h} = P(n_{x,y})
-  \label{eq:no_difusion}
-\end{equation} 
-
-Que se puede integrar usando el método de Euler, como se indica en la ecuación (\ref{eq:metodo_euler}). Se observa que el lado derecho consiste simplemente en la actualización de la variable $n$ usando su pendiente en cada instante de tiempo. Apartemos esto un momento para estudiar la parte difusiva, pero no debemos olvidarlo aún.
-
-\begin{equation}
-  n_{x,t+1}^e = n_{x,t} + h P(n_{x,t})
-  \label{eq:metodo_euler}
+  Cilindro:\ (x - 2)^2 + z^2 \leq 1
+  \label{eq:cilindro}
 \end{equation}
 
-Suponiendo ahora que sólo hay componente difusiva, la ecuación original puede escribirse como (\ref{eq:no_reaccion}). Aquí se utiliza el promedio entre las segundas derivadas calculadas hacia adelante y atrás para aproximar mejor el cambio en $n$.
+La densidad del sólido no es uniforme y es descrita por la fórmula (\ref{eq:densidad}). Debido a esto último, realizar una integración analítica para encontrar el centro de masa puede resultar complejo, por lo que se decide utilizar el método numérico de Monte Carlo para estimar su posición.
 
 \begin{equation}
-  \frac{n_{x,t+1} - n_{x,t}}{h} = \frac{1}{2} \left( \frac{n_{x+1,t+1} - 2 n_{x,t+1} + n_{x-1,t+1} }{h^2} + \frac{n_{x+1,t} - 2 n_{x,t} + n_{x-1,t} }{h^2} \right)
-  \label{eq:no_reaccion}
+  \rho(x, y, z) = 0.5 (x^2 + y^2 + z^2)
+  \label{eq:densidad}
 \end{equation}
 
-A partir de aquí se puede plantear un sistema de ecuaciones lineales para encontrar el valor de los $n_{x,t+1}$ desconocidos a partir de los $n_{x,t}$ conocidos para todos los puntos $x$ simultáneamente. Éste es el llamado método de Crank-Nicolson, explicado en múltiples excelentes referencias \footnote{Por ejemplo el documento "Solucion Numerica de la Ecuacion de Calor por el Metodo de las Diferencias Finitas", realizado por Miguel Caro C. del Departamento de Matematicas de la Universidad del Atlantico de Colombia, entre otros. Puede encontrarse en línea en el sitio http://www.icmc.usp.br/CMS/Arquivos/arquivos\_enviados/BIBLIOTECA\_113\_RT\_327.pdf}.
-
-El resultado de esta operación calcula todos los $n_{x,t+1}$. A grandes rasgos el resultado de una iteración puede describirse como se ve en la ecuación (\ref{eq:actualizacion_nicolson}), donde $CN( \Delta x, h, \mathbf{n} )$ es el término de actualización, $\Delta x$ la distancia entre puntos en unidades de longitud físicas y $\mathbf{n}$ el vector que contiene todos los $n_{x,t}$.
+Las integrales que se deben calcular para obtener la coordenada $x^i$ del centro de masa son las siguientes:
 
 \begin{equation}
-  n_{x,t+1}^{cn} = n_{x,t} + CN( \Delta x, h, \mathbf{n} )
-  \label{eq:actualizacion_nicolson}
-\end{equation} 
-
-En principio, calcular el valor completo de $n_{x,t+1}$ debiese ser tan sencillo como sumar $n_{x,t+1} = n_{x,t+1}^{cn} + n_{x,t+1}^{e}$, pero al hacer esto aparece un problema. Como se ve en la ecuación (\ref{eq:solucion_mala}), al hacer esta operación aparece un término $2n_{x,t}$. Este término es espurio y debe corregirse ya que el espíritu de la integración numérica es ir actualizando $n_{x,t}$ usando sus tasas de cambio, dadas en este caso por $CN(...)$ y $P(n)$. 
-
-\begin{equation}
-  n_{x,t+1} = n_{x,t+1}^{cn} + n_{x,t+1}^{e} = \mathbf{2n_{x,t}} + CN( \Delta x, h, \mathbf{n} ) + h P(n_{x,t})
-  \label{eq:solucion_mala}
+  M = \int_V \rho(\vec{r}) dx dy dz
+  \label{eq:calculo_masa}
 \end{equation}
 
-Para corregir el inconveniente, se opta por modificar el método de euler, dejándolo de la forma $n_{x,t+1}^{e^*} = h P(n_{x,t})$. Tras esta modificación, la ecuación (\ref{eq:solucion_mala}) toma la forma (\ref{eq:solucion_buena}), que como se ve en secciones posteriores logra integrar correctamente el sistema de difusión-reacción.
+\begin{equation}
+  T^i = \int_V x^i \rho(\vec{r}) dx dy dz
+  \label{eq:calculo_torque}
+\end{equation}
 
 \begin{equation}
-  n_{x,t+1} = n_{x,t+1}^{cn} + n_{x,t+1}^{e^*} = n_{x,t} + CN( \Delta x, h, \mathbf{n} ) + h P(n_{x,t})
-\label{eq:solucion_buena}
+  x^i = \frac{T^i}{M}
+  \label{eq:calculo_coordenada}
 \end{equation}
+
+Donde $i \in \{1,2,3\}$, de forma que $x^i$ represente a cada una de las coordenadas espaciales. En este caso $V$ es el volumen del cuerpo, condición que será relajada para el cálculo numérico como se estudia en la siguiente sección.
+
+\subsection{Algoritmo de Integración}
+
+Para usar el algoritmo de Monte Carlo, resulta útil definirse un volumen $W$ que contenga a $V$, pero posea una geometría mas sencilla. Observando la figura \ref{fig:objeto} se observa que el sólido está acotado por $
 
 \section{Resultados}
 
