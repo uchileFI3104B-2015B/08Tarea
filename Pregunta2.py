@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov 17 19:38:47 2015
-
-@author: splatt
+Se utiliza el algoritmo de Metrópolis sobre una distribución W.
 """
 
 from __future__ import division
@@ -18,6 +16,7 @@ np.random.seed(50)
 x=np.linspace(-5,10,N)
 plt.clf()
 plt.plot(x,W(x))
+
 x[0]=1.
 r = np.random.uniform(low=0.0, high=1.0, size=N)
 np.random.seed(51)
@@ -30,6 +29,7 @@ for i in range(0, N-1):
         contador+=1
     else:
         x[i+1] = x[i]
+        
 print("acepta un ", contador*100/float(N))," %"
 plt.hist(x, bins=50, normed=True, color='red')
 red_patch = mpatches.Patch(color='red', label='Histograma')
