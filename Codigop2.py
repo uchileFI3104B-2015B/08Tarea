@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 '''
@@ -9,6 +9,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import integrate
+
 
 def W_dist(x):
     '''
@@ -35,6 +36,7 @@ def avanza_metropolis(xn, delta):
     else:
         return xn
 
+
 def find_delta_opt(N_pruebas, d_minimo, d_maximo):
     '''
     Calcula el factor d rara para el cual se aceptan
@@ -57,7 +59,7 @@ def find_delta_opt(N_pruebas, d_minimo, d_maximo):
 
     return Deltas[j]
 
-semilla=16450
+semilla = 16450
 np.random.seed(semilla)
 Pasos = 10000000
 delta = find_delta_opt(1000, -10, 10)
@@ -75,8 +77,9 @@ a = plt.figure(1)
 a.clf()
 b = a.add_subplot(111)
 n, bins, patches = b.hist(Datos, 81, normed=True,
-                            color='cyan', label="Histograma")
-b.plot(X, distribucion, color='magenta', linewidth=2, label="Distribucion w(x)")
+                          color='cyan', label="Histograma")
+b.plot(X, distribucion, color='magenta', linewidth=2,
+       label="Distribucion w(x)")
 plt.xlabel("$x$")
 plt.ylabel("$Probabilidad$")
 plt.title('Distribucion W(x) y generada por Metropolis')

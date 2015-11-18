@@ -26,18 +26,21 @@ def en_cilindro(x, y, z):
     '''
     return (x - 2) ** 2 + z ** 2 <= 1
 
+
 def en_interseccion(x, y, z):
     '''
     Recibe coordenadas x, y, z y retorna True si se encuentra en la
     interseccion del toro y el cilindro, de lo contrario retorna False
     '''
-    return (en_toro(x, y, z) and en_cilindro(x, y ,z))
+    return (en_toro(x, y, z) and en_cilindro(x, y, z))
+
 
 def densidad(x, y, z):
     '''
     Recibe un punto (x, y, z) y entrega la densidad asociada a aquel
     '''
     return 0.5 * (x ** 2 + y ** 2 + z ** 2)
+
 
 def varianza(V, n, m, vm):
     '''
@@ -51,6 +54,7 @@ def error(M, VM, M_i, VM_i):
     calcula el error con el tratamiento adecuado
     '''
     return (M_i / M) * np.sqrt((VM_i / M_i) ** 2 + (VM / M) ** 2)
+
 
 def centro_masa(V, n_steps):
     '''
@@ -89,7 +93,7 @@ def centro_masa(V, n_steps):
     Mz = V * sum_z / n_steps
     V_M = varianza(V, n_steps, sum_total, var_total)
     V_Mx = varianza(V, n_steps, sum_x, var_x)
-    V_My = varianza(V, n_steps, sum_y , var_y)
+    V_My = varianza(V, n_steps, sum_y, var_y)
     V_Mz = varianza(V, n_steps, sum_z, var_z)
     X = Mx / M
     Y = My / M
