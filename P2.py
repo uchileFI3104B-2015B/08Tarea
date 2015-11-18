@@ -32,7 +32,7 @@ def algoritmo_metropolis(w, x0, n, d):
     y = np.zeros(n)
     #Guardamos el primer valor de la serie
     y[0] = x0
-    # Contador de aceptados y rechazados respectivamente
+    # Contador de aceptados 
     k = 0
     for i in range(n-1):
         y[i+1] = paso_metropolis(w, y[i], d)
