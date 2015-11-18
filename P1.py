@@ -1,6 +1,7 @@
 import numpy as np
 from math import *
 
+
 def densidad(x, y, z):
     '''Recibe coordenadas espaciales x, y, z
     Retorna valor de la densidad en ese punto
