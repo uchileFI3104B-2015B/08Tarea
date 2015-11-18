@@ -18,7 +18,7 @@ def torito(x, y, z, R=3, r=1, dentro=1):
     A = 4 * np.pi**2 * r * R  # Corresponde al area del toro
     V = 2 * np.pi**2 * R * r**2  # Corresponde al volumen del toro
     if dentro == 1:
-        return (R - np.sqrt(x**2 + y**2))**2 + z**2 <= 1
+         return (R - np.sqrt(x**2 + y**2))**2 + z**2 <= 1
     else:
         return A, V
 
@@ -63,25 +63,12 @@ def centro_de_masa(N=10000):
         z = np.random.uniform(0, 1) * 2 - 1
         vector = np.array([x, y, z, 1])  # cumple una función auxiliar
         if solido(x, y, z) == 1:
-            print 'dentro!'  # es decir, el punto esta dentro
             suma += vector * densidad(x, y, z)
             varianza += (vector * densidad(x, y, z))**2
-    print suma
-    print varianza
     masa = volumen * suma / N
-    # error = huhu
     centro = (masa / masa[3])[:3]
-    return centro
-
-
-
-
-
-
-
-
-
-
-
-
-    #
+    VAR = volumen * np.sqrt((varianza / N**2) - (masa / N)**2 / N)
+    print masa, centro, VAR
+    error = masa / masa[3] * np.sqrt((VAR / masa)**2 +
+                    (VAR[3] / masa[3])**2)
+    return centro, error
