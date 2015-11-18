@@ -1,4 +1,4 @@
-import numpy as np
+i                                                                  mport numpy as np
 
 np.random.seed(1911)
 
@@ -18,11 +18,11 @@ def en_cuerpo(x, y, z):  # Los puntos estan en el cuerpo?
         return False
 
 
-def densidad(x, y, z):  #Densidad del cuerpo
+def densidad(x, y, z):  # Densidad del cuerpo
     return 0.5 * (x**2 + y**2 + z**2)
 
 
-def varianza(x, y, z):  #Varianza segun coordenada y peso
+def varianza(x, y, z):  # Varianza segun coordenada y peso
     varp = densidad(x, y, z) ** 2
     varx = (densidad(x, y, z) * x) ** 2
     vary = (densidad(x, y, z) * y) ** 2

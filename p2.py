@@ -40,7 +40,6 @@ def metropolis(x_n, d):
         return x_n
 
 
-
 def delta_optimo(d_min, d_max, prueba):
     '''
     Determina delta tal que se acepte el 50% de las
@@ -86,7 +85,8 @@ for i in range(1, step):
     Dist[i] = w(x[i]) / norm
 
 # Segunda posicion = numero de barritas, alpha = opacidad
-n, bins, patches = plt.hist(Datos, 75, normed=1, facecolor='purple', alpha=0.4, label='Histograma')
+n, bins, patches = plt.hist(Datos, 75, normed=1, facecolor='purple',
+                            alpha=0.4, label='Histograma')
 plt.plot(x, Dist, 'g', label='Distribucion creada')
 plt.xlabel("$x$")
 plt.ylabel("$W(x)$")
