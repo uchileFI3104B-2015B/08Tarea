@@ -9,7 +9,7 @@ import numpy as np
 import math
 
 np.random.seed(7000)
-N = 10000000
+N = 1000000
 rand = np.random.uniform(low=0.0, high=1.0, size=N*3+3)
 sw = swx = swy = swz = 0.0
 varw = varx = vary = varz = 0.0
