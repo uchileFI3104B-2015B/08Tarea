@@ -97,6 +97,7 @@ def ultimate_function(n, s, xi):
     W_mean = np.zeros(100)
     W_std = np.zeros(100)
     for i in range(1, len(s)):
+        print i
         s_i = s[i]
         x_i = xi[i]
         b = np.histogram(calcula_dist(n, s_i, x_i), bins=100,
@@ -108,14 +109,14 @@ def ultimate_function(n, s, xi):
             a[m-1] = w_hist[m-1, l-1]
         W_mean[l-1] = np.mean(a)
         W_std[l-1] = np.std(a)
-    return W_mean, W_std
+    return W_mean, W_std, b[1]
 
 
 # iteracion
-n = 1000
-s = np.linspace(1, 10, 10)
-xi = np.linspace(-4, 5, 10)
-w, s = ultimate_function(n, s, xi)
+n = 10000000
+s = np.linspace(1, 100, 100)
+xi = np.linspace(-4, 5, 100)
+w, s, x_hist = ultimate_function(n, s, xi)
 
 # plots
 '''
@@ -125,9 +126,13 @@ f = plt.bar(np.arrange(100), W_mean, 0.16, )
 fig = plt.figure()
 fig.clf()
 ax1 = fig.add_subplot(111)
+x_hist = x_hist[1:]
 x = np.linspace(-8, 8, 100)
-ax1.errorbar(x, s, yerr=s)
+ax1.bar(x_hist, w, align='center', width=0.16, label="Distrubucion Obtenida")
+ax1.errorbar(x + 0.08, w, yerr=s, fmt='.', color='r', label="Error")
 ax1.set_xlabel("X")
 ax1.set_ylabel("W(x)")
+plt.legend()
+plt.savefig("histograma_con_errorbar.png")
 plt.draw()
 plt.show()
