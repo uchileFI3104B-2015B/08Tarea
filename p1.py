@@ -37,7 +37,7 @@ def MC1(N):
     var_z = 0
 
     for i in range(N):
-        x = np.random.uniform(1, 4)
+        x = np.random.uniform(1, 3)
         y = np.random.uniform(-4, 4)
         z = np.random.uniform(-1, 1)
 
@@ -79,4 +79,4 @@ X = integrales[1] / integrales[0]  # x/masa
 Y = integrales[2] / integrales[0]  # y/masa
 Z = integrales[3] / integrales[0]  # z/masa
 
-print "posicion centro de masas = (%s,%s,%s)" % (X, Y, Z)
+print "Posicion centro de masas = (%s,%s,%s)" % (X, Y, Z)
