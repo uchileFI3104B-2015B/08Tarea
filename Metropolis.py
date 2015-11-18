@@ -33,3 +33,6 @@ while n < N:
     else:
         x[n+1] = x[n]
     n += 1
+
+W_p = np.sqrt(np.pi) * (3.5*np.sqrt(3) + 2*np.sqrt(0.5))
+print "Numero de proposiciones aceptadas: ", n_a
