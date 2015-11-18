@@ -6,7 +6,7 @@ Obtiene el promedio de cada valor y su respectivo error.
 import numpy as np
 import matplotlib.pyplot as plt
 
-n = np.loadtxt('datos_n.txt')
+n = np.loadtxt('datos_10_millones_puntos.txt')
 bins_escogido = np.linspace(-10, 10, 51)
 
 suma_ns = np.zeros(50)
