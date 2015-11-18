@@ -1,4 +1,4 @@
-	#!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: iso-8859-1 -*-
 import numpy as np
 import matplotlib
