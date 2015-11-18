@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from math import *
 
 
 def next_point(x_n, dist):
@@ -18,13 +17,13 @@ def next_point(x_n, dist):
 def distr_W(x):
     ''' Retorna el valor de la distribucion
     no normalizada W(x) en el punto x '''
-    return 3.5 * exp(-(x - 3)**2 / 3) + 2 * exp(-(x + 1.5)**2 / 0.5)
+    return 3.5 * np.exp(-(x - 3)**2 / 3) + 2 * np.exp(-(x + 1.5)**2 / 0.5)
 
 ''' Algoritmo de Metropolis '''
 
 np.random.seed(1357)
 
-N = 1e7  # Cantidad de muestras
+N = 1e6  # Cantidad de muestras
 dist = 2.0  # Tamano de paso del algoritmo
 x_0 = 0.0  # Posicion inicial
 sample = []  # Almacena puntos aceptados
@@ -49,5 +48,20 @@ while j < N:
 print('Procentaje Aprobados = ' + str(aprov/N * 100))
 
 ''' Graficos '''
-plt.hist(sample)
+
+# Distribucion sin normalizar
+x_plt = np.arange(-4.0, 7.0, 0.1)
+W = distr_W(x_plt)
+fig1 = plt.figure()
+plt.plot(x_plt, W)
+
+# Distribucion normalizada
+x = np.arange(-70.0, 100.0, 0.1)
+W = distr_W(x)
+area = abs(np.trapz(x,W))
+W_norm = W / area
+fig2 = plt.figure()
+plt.plot(x, W_norm)
+plt.hist(sample, normed = 1, bins = 40)
+
 plt.show()
