@@ -102,7 +102,7 @@ En este caso $V$ es el volumen del cuerpo, condición que será relajada para el
   \label{eq:error}
 \end{equation}
 
-\subsection{Solución implementada}
+\subsection{Implementación}
 
 Para usar el algoritmo de Monte Carlo, resulta útil definirse un volumen $W$ que contenga a $V$, pero posea una geometría mas sencilla. Para este caso se utilizará un $W$ con forma de caja rectangular que acote de forma lo más precisa posible al sólido en estudio.
 
@@ -144,6 +144,17 @@ Como el algoritmo usado requiere una elevada cantidad de muestras para entregar 
 
 \section{Algoritmo de Metrópolis}
 
-El Algoritmo de Metrópolis
+\subsection{Introducción}
+
+Se desea obtener una muestra aleatoria de números que posean la distribución de la ecuación (\ref{eq:distribucion_no_normalizada}). Se desconoce la constante de normalizaciónde la distribución por lo que se utiliza el algoritmo de metrópolis para obtener los datos.
+
+\begin{equation}
+  W(x) = 3.5 \times \exp\left({\frac{-(x-3)^2}{3}}\right) + 2 \times \exp{\left(\frac{-(x+1.5)^2}{0.5}\right)}
+  \label{eq:distribucion_no_normalizada}
+\end{equation}
+
+\subsection{Implementación}
+
+
 
 \end{document}
