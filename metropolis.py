@@ -93,30 +93,17 @@ def calculador_error(w, N, n, l, d):
     - Input: (funcion, N=numeros, n=iteraciones, largo hist, distancia).
     - Output: Arreglo 'S' de desviaciones estandar en cada bin.
     '''
-    z = 0
-    
-    Y = np.zeros([N,n])
+    Y = np.zeros([N, n])
     for i in range(n):
         xn = np.random.uniform(-2., 2.)
-        Y[:,i], porcentaje = generador(w, xn, N, d)
-        
-        z += 1
-        print z
-    
-    H = np.zeros([l-1,n])
-    
-    z = 0
-    
+        Y[:, i], porcentaje = generador(w, xn, N, d)
+    H = np.zeros([l-1, n])
     for i in range(n):
-        num, bins, patches = p.hist(Y[:,i], normed=1, bins=np.linspace(-10., 10., l))
-        H[:,i] = num
-        
-        z += 1
-        print z
-        
+        num, bins, patches = p.hist(Y[:, i], normed=1, bins=np.linspace(-10., 10., l))
+        H[:, i] = num
     S = np.zeros(l-1)
     for i in range(len(S)):
-        S[i] = np.std(H[i,:])
+        S[i] = np.std(H[i, :])
     return bins, S
 
 
@@ -150,10 +137,10 @@ p.show()
 # Vectores a utilizar
 x1 = np.linspace(-10., 10., 10**6)
 y1 = w(x1)
+
+y2, porcentaje = generador(w, 0., 10**6, 3.96)
+
 '''
-y2, porcentaje = generador(w, 0., 10**7, 3.96)
-
-
 # Integral para calcular normalizacion
 integral = sci.trapz(y1, x=x1)
 print integral
@@ -173,16 +160,22 @@ p.show()
 #bins, S = calculador_error(w, 10**6, 100, 1000, 3.96)
 #x2 = bins[:-1]
 
-#guardar_archivo(x2, S, 'std')
+#guardar_archivo(bins, S, 'std')
 archivo = np.loadtxt('std.dat')  # Se abre el archivo
 
 x = archivo[:, 0]
 y = archivo[:, 1]
+#y = y[:-1]
 
-fig2 = p.figure()
+num, bins, patches = p.hist(y2, normed=1, bins=np.linspace(-10., 10., 100))
+p.plot(x1, y1, 'r-')
+p.show()
+
+fig2 = p.figure(2)
 fig2.clf()
 p.plot(x, y, '*')
 p.plot(x1, y1)
 p.xlabel("$x$")
 p.ylabel("$std(x)$")
+p.axis([-10., 10., -0.01, 0.3])
 p.show()
