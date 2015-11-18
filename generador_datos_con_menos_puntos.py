@@ -55,6 +55,6 @@ for i in range(len(xn)):
                                    normed=1, facecolor='g', alpha=0.5)
     datos_n = np.append(datos_n, n[i])
 
-np.savetxt('con_menos_puntos.txt', datos_n)
+np.savetxt('datos_100_puntos.txt', datos_n)
 
 print("--- %s seconds ---" % (time.time() - start_time))
