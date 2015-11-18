@@ -19,7 +19,6 @@ x=np.linspace(-5,10,N)
 x[0]=1.
 L=[]
 for j in range(0,n):
-    print j    
     np.random.seed(j*2)
     r = np.random.uniform(low=0.0, high=1.0, size=N)
     np.random.seed(j*2+1)
@@ -31,6 +30,16 @@ for j in range(0,n):
         else:
             x[i+1] = x[i]
     L.append(np.histogram(x,bins=50,normed=True))
+
+menStd=np.zeros(50)
+for l in range(0,50):
+    de=np.zeros(50)
+    for k in range(0,50):
+        y,binEdges=L[k]
+        de[k]=y[l]
+    menStd[l]=np.std(de)
+print menStd    
+
 plt.hist(x, bins=50, normed=True, color='red')
 red_patch = mpatches.Patch(color='red', label='Histograma')
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=10.,label='W(x)')
