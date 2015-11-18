@@ -173,7 +173,8 @@ for i in range(size_muestra):
 fig1 = plt.figure(1)
 fig1.clf()
 plt.plot(x, densidad, 'r-')
-plt.hist(muestra, bins=100, range=[-2.7, 6], histtype="stepfilled", normed=True)
+plt.hist(muestra, bins=100, range=[-2.7, 6],
+         histtype="stepfilled", normed=True)
 plt.xlim(-2.7, 6)
 plt.xlabel('Valores de la variable aleatoria (unidades)')
 plt.ylabel('Frecuencia (unidades)')
