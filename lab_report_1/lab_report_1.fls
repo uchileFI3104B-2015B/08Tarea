@@ -187,12 +187,18 @@ INPUT /usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map
 INPUT images/interseccion_P1.png
 INPUT ./images/interseccion_P1.png
 INPUT ./images/interseccion_P1.png
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT images/distribucion_no_normalizada.png
 INPUT ./images/distribucion_no_normalizada.png
 INPUT ./images/distribucion_no_normalizada.png
 INPUT images/resultado_P2.png
 INPUT ./images/resultado_P2.png
 INPUT ./images/resultado_P2.png
+INPUT /usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+INPUT /usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+INPUT images/bonus_P2.png
+INPUT ./images/bonus_P2.png
+INPUT ./images/bonus_P2.png
 INPUT lab_report_1.aux
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
@@ -204,3 +210,4 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb

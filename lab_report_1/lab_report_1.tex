@@ -111,7 +111,7 @@ En la Figura \ref{fig:interseccion_P1} se puede ver que el volumen del sólido e
 \begin{figure}[ht]
   \centering
   \includegraphics[scale = 0.5]{images/interseccion_P1.png}
-  \caption{La figura naranja es el sólido en estudio. Está formado por el volumen que se obtiene al intersectar el toro (celeste) con el cilindro (azul) descritos en la Sección \ref{sec:introduccion_P1}. }
+  \caption{La figura naranja es el sólido en estudio. Está formado por el volumen que se obtiene al intersectar el toro (celeste) con el cilindro (azul) descritos en la Sección \ref{sec:introduccion_P1}. La rutina del programa \emph{Mathematica} usada para hacer este dibujo se encuentra adjunta al repositorio.}
   \label{fig:interseccion_P1}
 \end{figure}
 
@@ -168,23 +168,48 @@ Se puede ver de la imagen que existe la posibilidad de que el paso tenga problem
 
 Para comparar estos resultados con la distribución original, se normaliza $W(x)$ dividiéndola por su área calculada integrando numéricamente con el método de los trapecios en el intervalo $x \in [-70, 100]$.
 
+\clearpage
 \subsection{Resultados}
 
 Usando los valores escogidos en la sección anterior, se obtiene la distribución de muestras de la Figura \ref{fig:resultados}, con una tasa de acierto de $\approx 66\%$.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[scale = 0.5]{images/resultado_P2.png}
+  \includegraphics[scale = 0.65]{images/resultado_P2.png}
   \caption{Gráfico de la función $W(x)$ normalizada vs un histograma con las muestras obtenidas del Algoritmo de Metrópolis. Las barras son de ancho $dx = 0.1$ y están definidas en el intervalo $x \in [-6, 10]$.}
   \label{fig:resultados}
 \end{figure}
 
 La imagen permite inferir que efectivamente se logró generar números aleatorios con una distribución equivalente a la de $W(x)$, al menos para los puntos donde esta última alcanza sus valores más elevados.
 
+\subsection{Error}
+
+Para determinar el error de cada bin del histograma, se procede realizando muchas iteraciones del algoritmo con parámetros iniciales distintos. Los parámetros se varían usando distribuciones aleatorias uniformes $U(x_{min}, x_{max}$), de la siguiente manera:
+
+\begin{itemize}
+  \item Posicion inicial $ x_0 = U(-1 , 1) $ 
+  
+  \item Distancia máxima de paso $ d = U(0.5, 3) $
+\end{itemize}
+
+Los valores se escogieron de forma que resulten similares a los utilizados en la iteración original (que dieron buenos resultados), pero con variación suficiente para revisar si el primer criterio utilizado fue muy arbitrario. La Figura \ref{fig:bonus} muestra los resultados obtenidos. El error usado es la desviación estándar del valor de cada barra considerando todas las muestras calculadas.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale = 0.65]{images/bonus_P2.png}
+  \caption{Histograma con barras de error. Se observa que la variación es mayor en los puntos más probables, lo que tiene sentido ya que son obtenidos con más frecuencia respecto a los menos probables. El error puede disminuirse aumentando el número de muestras por iteración.}
+  \label{fig:bonus}
+\end{figure}
+
+La cantidad de muestras por iteración fue disminuida debido al tiempo de cálculo requerido, sin embargo el histograma se grafica usando el promedio de todos los resultados por lo que existe cierta compensación. 
+
+
 \subsection{Conclusiones}
 
 El algoritmo implementado demostró ser exigente computacionalmente durante las simulaciones. Posiblemente se debe a que requiere un repetido cálculo de valores estocásticos, lo que sumado a la gran cantidad de iteraciones necesarias repercuten en un tiempo de procesamiento elevado. Considerando que el Algoritmo de Metrópolis es una cadena de Markov Monte Carlo, la última característica indica que al parecer los algoritmos de esta familia son exigentes, aunque se debe realizar más investigación para verificarlo. 
 
 También resulta importante notar que, pese a que $W(x) > 0$ en todos los puntos, no se obtuvieron muestras de $x$ muy lejanas a los puntos elevados de la distribución. El motivo es que el tamaño de paso acotado junto a la condición de aprobación de punto acotan la máxima distancia que el algoritmo puede avanzar en las zonas de baja probabilidad, por lo que esta técnica aproxima mejor a $W(x)$ para los valores de mayor probabilidad. Aun más, existen valores muy improbables pero posibles que se pueden obtener de $W(x)$ que podrían estar sub-representados o no aparecer en la estimación numérica.
+
+Del gráfico del error (Figura \ref{fig:bonus} se puede concluir que el método posee una incertidumbre no uniforme en el cálculo, con acentuación en los valores más probables. Esto quiere decir que es más probable sobreestimar o subestimar la frecuencia de aparición de estos valores mediante el método de Metrópolis. De todas formas la incertidumbre puede disminuirse aumentando la cantidad de muestras, con el costo de mayor tiempo de cálculo por supuesto.
 
 \end{document}

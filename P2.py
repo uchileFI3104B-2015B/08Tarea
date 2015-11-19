@@ -13,11 +13,14 @@ def next_point(x_n, dist):
     x_p: punto siguiente propuesto
     '''
     return x_n + dist * np.random.uniform(-1.0, 1.0)
+# END of next_point
+
 
 def distr_W(x):
     ''' Retorna el valor de la distribucion
     no normalizada W(x) en el punto x '''
     return 3.5 * np.exp(-(x - 3)**2 / 3) + 2 * np.exp(-(x + 1.5)**2 / 0.5)
+# END of distr_W
 
 ''' Algoritmo de Metropolis '''
 
@@ -64,15 +67,15 @@ plt.grid()
 # Se normaliza distribucion usando area
 x = np.arange(-70.0, 100.0, 0.1)
 W = distr_W(x)
-area = abs(np.trapz(x,W))
+area = abs(np.trapz(x,  W))
 W_norm = W / area
 
 # Creamos histograma con bins fijos
 bins = np.arange(-6, 10, 0.1)
 hist_val = np.histogram(sample, bins)
 fig2 = plt.figure()
-plt.plot(x, W_norm, label = 'W(x) Normalizada')
-plt.hist(sample, normed = 1, bins = bins, label = 'Histograma Muestras')
+plt.plot(x, W_norm, label='W(x) Normalizada')
+plt.hist(sample, normed=1, bins=bins, label='Histograma Muestras')
 plt.rc('text', usetex=True)
 str_title = "Distribucion W(x) normalizada vs Histograma de $10^7$ Muestras \n\
             obtenidas con Algoritmo de Metropolis"

@@ -22,6 +22,7 @@ def densidad(x, y, z):
 
     # Punto esta fuera del solido
     return 0.0
+# END of densidad
 
 ''' Algoritmo de Monte Carlo '''
 
