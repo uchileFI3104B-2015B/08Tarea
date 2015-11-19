@@ -21,7 +21,12 @@ def distr_W(x):
 
 ''' Algoritmo de Metropolis '''
 
-np.random.seed(1357)
+def algoritmo_metropolis(seed, N, dist):
+    ''' Ejecuta el algoritmo de Metropolis
+    con una semilla determinada por el usuario.
+    Retorna las muestras obtenidas '''
+
+    np.random.seed(1357)
 
 N = 1e7  # Cantidad de muestras
 dist = 2  # Tamano de paso del algoritmo
@@ -45,21 +50,7 @@ while j < N:
     sample.append(x_n)
     j += 1
 
-print('Procentaje Aprobados = ' + str(aprov/N * 100))
-
 ''' Graficos '''
-
-# Distribucion sin normalizar
-x_plt = np.arange(-4.0, 8.0, 0.1)
-W = distr_W(x_plt)
-fig1 = plt.figure()
-plt.rc('text', usetex=True)
-plt.plot(x_plt, W)
-str_title = "Distribucion no normalizada W(x)"
-plt.title(str_title, y=1.02)
-plt.ylabel('W(x)', size=14)
-plt.xlabel('x', size=14)
-plt.grid()
 
 # Se normaliza distribucion usando area
 x = np.arange(-70.0, 100.0, 0.1)
