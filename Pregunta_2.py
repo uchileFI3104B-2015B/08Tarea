@@ -1,108 +1,70 @@
 """
-Script que estima el centro de masa de un solido generado por la interseccion
-de un toro y un cilindro de ecuaciones:
-toro: z^2+(sqrt(x^2+y^2)-3)^2
-cilindro: (x-2)^2+z^2
-La densidad del solido varia de la forma:
-0.5*(x^2+y^2+z^2)
+Sript que utiliza el algoritmo de metropolis para obtener aproximacion de la
+densidad de probabilidad W(x), la cual corresponde a:
+3.5*exp(-(x-3^*2/3) + 2*exp(-(x+1.5)^2/0.5)
+
 """
 
 from __future__ import division
 import numpy as np
+import matplotlib.pyplot as plt
 
 
-np.random.seed(7)
+np.random.seed(55)
 
 
-def densidad(x, y, z):
+def W(x):
     """
-    Retorna densidad en un punto dado de coordenadas (x,y,z)
+    Retorna el valor de la funcion de densidad W en el punto x
     """
-    return 0.5*(x**2+y**2+z**2)
+    return 3.5*np.exp(-(x-3)**2/3) + 2*np.exp(-(x+1.5)**2/0.5)
 
 
-def en_toro(x, y, z):
-    """
-    Retorna True si el punto (x,y,z) esta en el toro
-    Retorna False si no esta en el toro.
-    """
-    toro = z**2+(np.sqrt(x**2+y**2)-3)**2
-    if toro <= 1:
-        return True
+N_muestra = 1e7
+delta = 4
+x_muestra = np.zeros(N_muestra + 1)
+x_0 = 0
+x_muestra[0] = x_0
+
+aceptados = 0
+no_aceptados = 0
+
+i = 0
+while i < N_muestra:
+    r = np.random.uniform(-1, 1)
+    u = np.random.uniform(0, 1)
+    xp = x_muestra[i] + delta*r
+    if W(xp)/W(x_muestra[i]) > u:
+        xn = xp
+        x_muestra[i+1] = xp
+        aceptados += 1
     else:
-        return False
+        x_muestra[i+1] = x_muestra[i]
+        no_aceptados += 1
+    i += 1
 
+porcentaje_aceptados = 100*aceptados/(aceptados + no_aceptados)
+print 'porcentaje aceptados = ' + str(porcentaje_aceptados) + '%'
 
-def en_cilindro(x, z):
-    """
-    Retorna True si el punto (x,y,z) esta en el cilindro.
-    Retorna False si no esta en el cilindro
-    """
-    cilindro = (x-2)**2+z**2
-    if cilindro <= 1:
-        return True
-    else:
-        return False
+w = np.zeros(N_muestra)
+x = np.linspace(-6, 8, N_muestra)
 
+j = 0
+for i in x:
+        w[j] = W(i)
+        j += 1
 
-# setup
+w_normalizado = w/13.2616
 
-n = 10000
-suma_densidades = suma_x = suma_y = suma_z = 0
-x_CM = np.zeros(100)
-y_CM = np.zeros(100)
-z_CM = np.zeros(100)
+# graficos
 
-# limites del volumen sobre el que se integra
-limite_x1 = 1
-limite_x2 = 3
-limite_y1 = -4
-limite_y2 = 4
-limite_z1 = -1
-limite_z2 = 1
-
-d_x = 2
-d_y = 8
-d_z = 2
-volumen = d_x*d_y*d_z
-
-# En cada iteracion se obtienen valores para las coordenadas del centro de masa
-
-counter = 0
-while counter < 100:
-    for i in range(n):
-        x = np.random.uniform(limite_x1, limite_x2)
-        y = np.random.uniform(limite_y1, limite_y2)
-        z = np.random.uniform(limite_z1, limite_z2)
-        if en_toro(x, y, z) and en_cilindro(x, z):
-            rho = densidad(x, y, z)
-            suma_densidades += rho
-            suma_x += x*rho
-            suma_y += y*rho
-            suma_z += z*rho
-    masa = volumen*suma_densidades/n
-    f_x = volumen*suma_x/n
-    f_y = volumen*suma_y/n
-    f_z = volumen*suma_z/n
-    x_cm = f_x/masa
-    y_cm = f_y/masa
-    z_cm = f_z/masa
-    x_CM[counter] = x_cm
-    y_CM[counter] = y_cm
-    z_CM[counter] = z_cm
-    counter += 1
-# Se promedian todos los valores obtenidos para  obteneer las coordenadas del
-# centro de masa
-
-promedio_x = np.mean(x_CM)
-promedio_y = np.mean(y_CM)
-promedio_z = np.mean(z_CM)
-
-desviacion_estandar_x = np.std(x_CM)
-desviacion_estandar_y = np.std(y_CM)
-desviacion_estandar_z = np.std(z_CM)
-# Muestra los valores obtenidos
-
-print 'x_cm = ' + str(promedio_x) + '+-' + str(desviacion_estandar_x)
-print 'y_cm = ' + str(promedio_y) + '+-' + str(desviacion_estandar_y)
-print 'z_cm = ' + str(promedio_z) + '+-' + str(desviacion_estandar_z)
+plt.plot(x, w_normalizado, color='r', linewidth=2.5, label='Distribucion W(x)')
+plt.xlim(-6, 8)
+plt.hist(x_muestra, bins=70, color='b', normed=1, label='Histograma',
+         alpha=0.5)
+plt.title('distribucion W(x) normalizada y generada con algoritmo de \
+           metropolis')
+plt.xlabel('x')
+plt.ylabel('W(x)')
+plt.grid(True)
+plt.legend(loc='upper left')
